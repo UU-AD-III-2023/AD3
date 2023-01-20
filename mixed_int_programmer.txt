@@ -1,0 +1,23 @@
+/* function: 
+ * z: zones
+ * s: stations -> pointer to centain zone: parameter to be optimised, each having v vehicles
+ * v: number of vehicles at each station
+ * c: close vehicles in zone 
+ * d: demand for each zone
+ * t: time to travel between / within the zones
+ *
+ */
+ 
+ f(z, s, c, d, t):
+    for x each z: 
+        for all vehicles: 
+            t[x, vehicle]
+        select c lowerst
+        take average
+        multiply with d[x]
+    return sum over all z
+
+
+minimize(f)
+            
+    
