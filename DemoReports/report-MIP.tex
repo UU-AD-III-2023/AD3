@@ -1,26 +1,28 @@
+% !TEX root = demoReport.tex
 \section*{Problem 1: Mixed Integer Programming (MIP)}
 
 \newcommand{\SolverMIP}{\todo{Gurobi}\xspace}  % or CPLEX, or Xpress, or Cbc
 \newcommand{\TimeoutMIP}{\todo{300.00}}  % timeout, in CPU seconds; MIN 300.00
 
-\paragraph{Task~a: Model.}~
-\todo{What are the variables, their meanings, their constraints, and
-  the objective function?
-  % 
-  For example, for the investment design problem, one might write:
-  ``Let variable~$m_{ij}$ take value~$1$ if basket~$i$ invests in
-  credit~$j$, and value~$0$ otherwise, with $i \in 1..v$ and
-  $j \in 1..b$.
-  % 
-  The constraint that each row must sum up to~$r$ can then be linearly
-  modelled as
-  \[
-    \forall i \in 1..v : \sum_{j \in 1..b} m_{ij} = r
-  \]
-  % 
-  Etc.''
-  %
-}
+\paragraph{Task~a: Model.}
+We define the variables first:
+\begin{itemize}
+  \item Let $z$ be the number of zones.
+  \item Let $s$ be the number of service stations.
+  \item Let $v$ be the number of vehicle, we will therefore have $v \cdot s$ of vehicles at our disposal in total.
+  \item Let $c$ be the number of vehicles considered
+  \item Let $d$ be a tuple of length $z$ giving the demand for each zone $z$.
+  \item Let $T$ be a matrix of dimension $z \times z$ with the travel time from one zone to the other.
+\end{itemize}
+The problem we want to optimise is to select $s$ zones in which we will place our service stations. Our objective is to minimise the sum over the average travel time of the $c$ closest vehicles of each zone multiplied by the demand of the zone. Mathematically, this leads to the following function:
+
+
+\begin{align*}
+  M & = \sum_{k=1}^{z} \frac{1}{c}\left(\sum_{\ell = 1}^{c}  T_{v(\ell) k} \right) \cdot d_k
+\end{align*}
+
+Where we choose the $T_{v(\ell) k}$ in such a way, that the value of $M$ is minimal, where the $v(\ell)$ indicates the zone of the vehicle. As we have to choose 
+
 
 \paragraph{Task~b: Implementation.}
 Our model \texttt{servStatLoc.mod} is \todo{uploaded} with this
@@ -105,7 +107,7 @@ We think that \todo{\filler}, because \todo{\filler}.
     %% delete the following sentence:
     \todo{(The sample performance of this demo report is made up,
       except for the two optimal objective values!)}
-    % 
+    %
   }
   \label{tab:res:mip}
 \end{table}
