@@ -1,31 +1,25 @@
 #include <iostream>
+#include <set>
 using namespace std;
 
 class Row {
 protected:
   int length;
-  int row[]; // Array sawing which numbers in a row are colored.
+  set<int> row; // soled using sets
 
 public:
   Row(int length, int coloured_fields) {
-    row = int[length];
-    for (int i = 0; i < coloured_fields;) {
+    while (row.size() > coloured_fields) {
       int x = rand();
-      x = x % length;
-      if (!(x in row)) {
-        row[i] = x;
-        i++;
-      }
+      row.insert(x);
     }
   }
+  // Calculating the dot product between 2 rows.
   int DotProduct(Row row) {
-    int count = 0;
-    for (int i = 0; i < length; i++) {
-      if ((row.row[i]) && (row[i])) {
-        count++
-      }
-    }
-    return count;
+    set<int> commun;
+    set_intersection(row.begin(), row.end(), row.row.begin(), row.row.end(),
+                     inserter(commun, commun.begin()));
+    return commun.size();
   }
 };
 
@@ -38,7 +32,7 @@ public:
   Matrix(int aRow, int aColumn) {
     row = aRow;
     columns = aColumn;
-    int matrix[row][columns];
+    Row[columns];
   }
   int getLargestDotProduct() {
     int val = INT_MIN;
