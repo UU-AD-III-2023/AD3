@@ -16,6 +16,10 @@
         take average
         multiply with d[x]
     return sum over all z
+    
+    // better function: 
+    // see model in latex, i believe it's more clear then what kind of text I'll write here, but the idea is basically the same. 
+        
 
 
 minimize(f)

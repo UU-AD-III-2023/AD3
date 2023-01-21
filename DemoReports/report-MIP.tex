@@ -8,20 +8,24 @@
 We define the variables first:
 \begin{itemize}
   \item Let $z$ be the number of zones.
-  \item Let $s$ be the number of service stations.
-  \item Let $v$ be the number of vehicle, we will therefore have $v \cdot s$ of vehicles at our disposal in total.
+  \item Let $s$ be the number of service stations that we place in one zone each. 
+  \item Let $v$ be the number of vehicle, we will therefore have $N = v \cdot s$ of vehicles at our disposal in total.
   \item Let $c$ be the number of vehicles considered
   \item Let $d$ be a tuple of length $z$ giving the demand for each zone $z$.
   \item Let $T$ be a matrix of dimension $z \times z$ with the travel time from one zone to the other.
 \end{itemize}
-The problem we want to optimise is to select $s$ zones in which we will place our service stations. Our objective is to minimise the sum over the average travel time of the $c$ closest vehicles of each zone multiplied by the demand of the zone. Mathematically, this leads to the following function:
+The problem we want to optimise is to select $s$ zones in which we will place our service stations. Our objective is to minimise the sum over the average travel time of the $c$ closest vehicles of each zone multiplied by the demand of the zone. For each zone, we need to determine the closest $c$ vehicles from the $N$ we have at our disposal. As each station has $v$ vehicles at its disposal, we take $v$ vehicles from the  $\Floor{\frac{c}{s}}$ closest station from a zone $z_i$ and $c \mod s$ from the $\Floor{\frac{c}{s}} + 1$ closest station. 
+Let $s_i$ be the zones we choose to position our stations in. Then we get the linear function for the zone $z_j$: 
 
+\begin{equation*}
+	f_j(s_1, s_2, \cdots, s_s) = \sum_{k=1}^{\Floor{\frac{c}{s}}} T_{s_k, j} \cdot v +  T_{s_{\Floor{\frac{c}{s}} + 1}, j} \:\cdot(c \mod s)
+\end{equation*}
+
+Where the function $f_j(s_1, s_2, \cdots, s_s)$ implicitly depends on the $j$, as we choose the $s$ in a way that they are the closest. For all zones we have the function we want to minimilize
 
 \begin{align*}
-  M & = \sum_{k=1}^{z} \frac{1}{c}\left(\sum_{\ell = 1}^{c}  T_{v(\ell) k} \right) \cdot d_k
+	f(s_1, s_2, \cdots, s_s) & = \sum_{j=1}^{z} \frac{1}{c}f_j(s_1, s_2, \cdots, s_s) \cdot d_j
 \end{align*}
-
-Where we choose the $T_{v(\ell) k}$ in such a way, that the value of $M$ is minimal, where the $v(\ell)$ indicates the zone of the vehicle. As we have to choose 
 
 
 \paragraph{Task~b: Implementation.}
