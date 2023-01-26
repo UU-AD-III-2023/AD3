@@ -23,15 +23,12 @@ set Zones := 1..z;
 param Demand {Zones} >= 0; # Demand[i] = demand of zone i
 param Time {Zones,Zones} >= 0; # Time[i,j] = time from zone i to j
 
-set ServiceStations := 1..s;
-# selected zone to place budgetted service station number of stations
-var selectedZone {Zones, ServiceStations} binary;
-var sentV {ServiceStations} >=0, <=v, integer;
+# selected zone to place budgetted service stations
+var selectedZone {Zones} >=0, <= s*v, integer;
 
 # minimize the sum over all the zones of the average travel time of the c closest vehicles of each zone, multiplied by the demand of the zone.
 # Time from j to i * demand of i * number of stations from j to i
-minimize TotalTime: sum {i in Zones, j in Zones} Time[j,i]*Demand[i]*sentV[k]*selectedZone[j,k]; # divide minimum by c*z at the end to get average
+minimize TotalTime: sum {i in Zones, j in Zones} Time[j,i]*Demand[i]*selectedZone[j];
 
-subject to stationLimit : sum {i in Zones, j in ServiceStations} selectedZone[i, j] = s; # C stations (1 per station)
-#subject to cLimit {i in Zones}: sum {j in ServiceStations} sentV[i,j] = c;
-# subject to serviceLimit {i in Zones}: sum {j in Zones} selectedC[i,j] <= s*v; # maximum service station vehicles
+subject to stationLimit : sum {i in Zones} selectedZone[i] = c; # C stations
+# subject to serviceLimit {i in Zones}: sum {j in Zones} selectedZone[i,j] <= s*v; # maximum service station vehicles
