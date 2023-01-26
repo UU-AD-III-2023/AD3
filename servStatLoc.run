@@ -10,6 +10,8 @@ solve;
 
 display TotalTime;
 display TotalTime/c/z;
-display selectedC;
+display selectedZ;
+display sentV;
+display stationLimit;
 
 quit;
