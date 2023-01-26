@@ -1,0 +1,15 @@
+# Reset AMPL
+#reset;
+
+# Set solver parameters
+option relax_integrality 0;
+option cplex_options 'timelimit = 30000';
+
+# Solve problem
+solve;
+
+display TotalTime;
+display TotalTime/c/z;
+display selectedC;
+
+quit;

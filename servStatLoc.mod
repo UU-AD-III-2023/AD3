@@ -24,11 +24,11 @@ param Demand {Zones} >= 0; # Demand[i] = demand of zone i
 param Time {Zones,Zones} >= 0; # Time[i,j] = time from zone i to j
 
 # number selected from each zone j to zone i
-var selectedC {Zones, Zones} >=0, <= s*v;
+var selectedC {Zones, Zones} >=0, <= s*v, integer;
 
 # minimize the sum over all the zones of the average travel time of the c closest vehicles of each zone, multiplied by the demand of the zone.
 # Time[i,j] = Time[j,i]
-minimize TotalTime: sum {i in Zones, j Zones} Time[i,j]*Demand[i]*selectedC[i,j]; # divide minimum by c*z at the end to get average
+minimize TotalTime: sum {i in Zones, j in Zones} Time[i,j]*Demand[i]*selectedC[i,j]; # divide minimum by c*z at the end to get average
 
 # Exactly c vehicles must be selected
 subject to Limit {i in Zones}: sum {j in Zones} selectedC[i,j] = c;
