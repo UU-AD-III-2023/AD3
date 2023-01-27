@@ -9,7 +9,7 @@ option cplex_options 'timelimit = 30000';
 solve;
 
 display TotalTime;
-display TotalTime/c/z;
+display TotalTime/c;
 display selectedZone;
 
 quit;
