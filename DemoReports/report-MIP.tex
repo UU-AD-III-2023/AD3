@@ -1,4 +1,4 @@
-% !TEX root = demoReport.tex
+ % !TEX root = demoReport.tex
 \section*{Problem 1: Mixed Integer Programming (MIP)}
 
 \newcommand{\SolverMIP}{\todo{Gurobi}\xspace}  % or CPLEX, or Xpress, or Cbc
@@ -18,7 +18,7 @@ The problem we want to optimise is to select $s$ zones in which we will place ou
 Let $s_i$ be the zones we choose to position our stations in. Then we get the linear function for the zone $z_j$: 
 
 \begin{equation*}
-	f_j(s_1, s_2, \cdots, s_s) = \sum_{k=1}^{\Floor{\frac{c}{s}}} T_{s_k, j} \cdot v +  T_{s_{\Floor{\frac{c}{s}} + 1}, j} \:\cdot(c \mod s)
+	f_j(s_1, s_2, \cdots, s_s) = \sum_{k=1}^{\Floor{\frac{c}{s}}} T_{s_k, j} \cdot v +  T_{s_{\Floor{\frac{c}{s}} + 1}, j} \:\cdot(c \bmod s)
 \end{equation*}
 
 Where the function $f_j(s_1, s_2, \cdots, s_s)$ implicitly depends on the $j$, as we choose the $s$ in a way that they are the closest. For all zones we have the function we want to minimilize
