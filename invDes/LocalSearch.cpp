@@ -27,24 +27,26 @@ class Matrix {
 protected:
   int row;
   int columns;
+  set<Row> rows;
+  int max_dotprod;
 
 public:
-  Matrix(int aRow, int aColumn) {
+  Matrix(int aRow, int aColumn, int aColoured) {
     row = aRow;
     columns = aColumn;
-    Row[columns];
+    for (int i = 0; i < columns; i++) {
+      rows.add(Row(row, aColoured));
+    }
   }
   int getLargestDotProduct() {
-    int val = INT_MIN;
-    for (int i = 0; i < row; i++) {
-      for (int j = i + 1; i < row; j++) {
-        if (row[i].Dotproduct(row[j]) > val) {
-          val = row[i].Dotproduct(row[j]);
-        }
-      }
+
+    int val = 0;
+    for () {
     }
-    return val;
   }
-};
+} return val;
+}
+}
+;
 
 int main() { return 0; }
