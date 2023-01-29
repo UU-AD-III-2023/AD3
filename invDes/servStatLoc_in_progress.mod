@@ -27,7 +27,7 @@ param Time {Zones,Zones} >= 0; # Time[i,j] = time from zone i to j
 param p {Zones} >= 0; # p[i] = 1, if v cars in zone i are taken
 param q {Zones} >= 0; # q[i] = 1, if c % v cars in zone i are taken
 param r {Zones} >= 0; # r[i] = 1, if no cars from zone i are taken
-param station_pos {Zones} >= 0; # station_pos[i] = 1, if station is in zone i
+param selectedZone {Zones} >= 0; # selectedZone[i] = 1, if station is in zone i
 
 # limits on cars to take
 subject to p:
@@ -52,7 +52,7 @@ subject to p, station_pos:
 
 
 # selected zone to place budgetted service stations
-var selectedZone {Zones} >=0, <= s*v, integer;
+# var selectedZone {Zones} >=0, <= s*v, integer;
 
 # minimize the sum over all the zones of the average travel time of the c closest vehicles of each zone, multiplied by the demand of the zone.
 # Time from j to i * demand of i * number of stations from j to i
