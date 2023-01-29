@@ -4,6 +4,7 @@
 template<class T, int size, int n> class Matrix {
 public:
 	T a_int[n], b_int[n][size];
+    // void initialise() {}
 	Matrix() {}
 	void dot_prod(T a[n], T b[n][size], int j, T &out) {
 		T dotp = 0;
@@ -19,15 +20,6 @@ public:
 			dotp += a_int[i] * b_int[i][j];
 		}
 		out = dotp;
-	}
-};
-
-template <class T> T ReLu(T a) {
-	if (a > 0) {
-		return a;
-	}
-	else {
-		return 0;
 	}
 };
 
