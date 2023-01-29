@@ -27,6 +27,7 @@ param Time {Zones,Zones} >= 0; # Time[i,j] = time from zone i to j
 param p {Zones} >= 0; # p[i] = 1, if v cars in zone i are taken
 param q {Zones} >= 0; # q[i] = 1, if c % v cars in zone i are taken
 param r {Zones} >= 0; # r[i] = 1, if no cars from zone i are taken
+param station_pos {Zones} >= 0; # station_pos[i] = 1, if station is in zone i
 
 # limits on cars to take
 subject to p:
@@ -42,8 +43,11 @@ subject to p, r: # p dot r = 0
   sum{z in Zones} (p[z] * r[z]) = 0
 subject to q, r: # q dot r = 0
   sum{z in Zones} (q[z] * r[z]) = 0
+subject to p, station_pos:
+  sum{z in Zones} (p[z] * s[z]) = s / c
 
-## add minimize distance. 
+## add minimize distance.
+
 
 
 
