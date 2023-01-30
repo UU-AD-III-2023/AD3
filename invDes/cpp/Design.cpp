@@ -1,19 +1,18 @@
 #include "Design.h"
 
-Design(int v, int b, int r) {
-this.v = v;
-this.b = b;
-this.r = r;
-/* ... */
-this.init();
+Design::Design(int v, int b, int r) {
+    this->v = v;
+    this->b = b;
+    this->r = r;
+    /* ... */
 }
 
 /**
  * Create a random initial assignment, setup incremental data structures for detminening which row
  * changes given a move, and setup the dotProduct object.
  */
-void init() {
-/* ... */
+void Design::init() {
+    /* ... */
 }
 
 /**
@@ -22,13 +21,13 @@ void init() {
  *
  * @param m
  */
-Cost probeMove(Move m) {
-/* ... */
+Cost Design::probeMove(Move m) {
+    /* ... */
 
-// Allocating an new object each probe is unnecessarily expensive.
-// This can be worked around by instead updating some static object.
-// However, for this assignment allocating here should be fine...
-return new Cost(/* ... */);
+    // Allocating an new object each probe is unnecessarily expensive.
+    // This can be worked around by instead updating some static object.
+    // However, for this assignment allocating here should be fine...
+    return new Cost(/* ... */);
 }
 
 /**
@@ -37,8 +36,8 @@ return new Cost(/* ... */);
  *
  * @param m
  */
-void commitMove(Move m) {
-/* ... */
+void Design::commitMove(Move m) {
+    /* ... */
 }
 
 /**
@@ -49,7 +48,7 @@ void commitMove(Move m) {
  *
  * @param m
  */
-private void updateDotProductFromMove(Move m) {
+void Design::updateDotProductFromMove(Move m) {
 /* ... */
 }
 
@@ -57,7 +56,7 @@ private void updateDotProductFromMove(Move m) {
  * Saves the current assignment such that it can be restored later. Call this when finding a new
  * overall best assignment.
  */
-void saveDesign() {
+void Design::saveDesign() {
 /* ... */
 }
 
@@ -65,7 +64,7 @@ void saveDesign() {
  * Restores the saved assignment such that search can continue from it. Call this when doing an
  * intensification step or for printing the best found solution at the end of the search.
  */
-void restoreSavedDesign() {
+void Design::restoreSavedDesign() {
 /* ... */
 }
 
@@ -73,7 +72,6 @@ void restoreSavedDesign() {
  *
  * @return the current design in the format required by the assignment.
  */
-@Override
-public String toString() {
+string Design::toString() {
 return "/*...*/";
 }
