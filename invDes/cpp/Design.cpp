@@ -27,7 +27,7 @@ Cost Design::probeMove(Move m) {
     // Allocating an new object each probe is unnecessarily expensive.
     // This can be worked around by instead updating some static object.
     // However, for this assignment allocating here should be fine...
-    return new Cost(/* ... */);
+    return Cost(/* ... */);
 }
 
 /**

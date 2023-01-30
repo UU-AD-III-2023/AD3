@@ -1,6 +1,6 @@
 #include "LocalSearch.h"
 
-LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta){
+LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
   this->v = v;
   this->b = b;
   this->r = r;

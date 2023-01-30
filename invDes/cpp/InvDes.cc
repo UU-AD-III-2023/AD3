@@ -15,37 +15,37 @@ class InvDes {
 
     public:
         void main(int argc, char * argv[]) {
-        // Paramters for tuning local search algorithm, does not have to be int.
-        int alpha = 0;
-        int beta = 0;
+            // Paramters for tuning local search algorithm, does not have to be int.
+            int alpha = 0;
+            int beta = 0;
 
-        if (argc == 4) {
-            int v = atoi(argv[1]);
-            int b = atoi(argv[2]);
-            int r = atoi(argv[3]);
-            runSolver(v, b, r, alpha, beta);
-        } else {
-            // This is just an example of how to run all instances, you probably want to do
-            // something more interesting in order to gather the required statistics.
-            /* ... */
-            for (auto & instance : instances) {
-                runSolver(instance[0], instance[1], instance[2], alpha, beta);
+            if (argc == 4) {
+                int v = atoi(argv[1]);
+                int b = atoi(argv[2]);
+                int r = atoi(argv[3]);
+                runSolver(v, b, r, alpha, beta);
+            } else {
+                // This is just an example of how to run all instances, you probably want to do
+                // something more interesting in order to gather the required statistics.
+                /* ... */
+                for (auto & instance : instances) {
+                    runSolver(instance[0], instance[1], instance[2], alpha, beta);
+                }
             }
         }
-}
 
-    void runSolver(int v, int b, int r, int alpha, int beta) {
-    // Todo: Add asserts
-    printf("Solving instance v: ", v, " b: ", b,  " r: ", r, 
-     ". With parameters alpha: ", alpha, " beta: ", beta);
-    LocalSearch s = new LocalSearch(v, b, r, alpha, beta);
-    s.run();
-  }
-}
+        void runSolver(int v, int b, int r, int alpha, int beta) {
+            // Todo: Add asserts
+            printf("Solving instance v: ", v, " b: ", b,  " r: ", r, 
+            ". With parameters alpha: ", alpha, " beta: ", beta);
+            LocalSearch s = LocalSearch(v, b, r, alpha, beta);
+            s.run();
+        }
+};
 
 
 int main (int argc, char * argv[]) {
     // Initialise v,b,r (argv)
     
     return 0;
-}
+};
