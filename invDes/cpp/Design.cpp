@@ -73,5 +73,5 @@ void Design::restoreSavedDesign() {
  * @return the current design in the format required by the assignment.
  */
 string Design::toString() {
-return "/*...*/";
+    return "/*...*/";
 }
