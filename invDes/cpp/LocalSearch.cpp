@@ -12,6 +12,8 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
   this->beta = beta;
 }
 
+LocalSearch::LocalSearch(){}
+
 int LocalSearch::calculateLb(){
   return 0;
 };
@@ -28,5 +30,6 @@ Move LocalSearch::getRandomNeighbour(){
   return Move();
 };
 string LocalSearch::getOutput(){
-  return ("",v," ",b," ",r," ",lb," ",bestLambda,"\n ",design.toString());
+  // return ("",v," ",b," ",r," ",lb," ",bestLambda,"\n ",design.toString());
+  return "bestLambda";
 };

@@ -1,26 +1,20 @@
-#ifndef _FUNCTS_
-#define _FUNCTS_
+#pragma once
 
-template<class T, int size, int n> class Matrix {
+#include <iostream>
+
+// #ifndef _FUNCTS_
+// #define _FUNCTS_
+
+#include <vector>
+using std::vector;
+
+// b[n][size]
+template<class T> class Matrix {
 public:
-	T a_int[n], b_int[n][size];
+	T a_int, b_int;
     // void initialise() {}
-	Matrix() {}
-	void dot_prod(T a[n], T b[n][size], int j, T &out) {
-		T dotp = 0;
-
-		for(int i=0; i<n;i++){
-			a_int[i]=a[i];
-		}
-		for(int i=0; i<n;i++){
-			b_int[i][j]=b[i][j];
-		}
-
-		for(int i=0; i<n; i++) {
-			dotp += a_int[i] * b_int[i][j];
-		}
-		out = dotp;
-	}
+	Matrix();
+	void dot_prod(T a, T b, int j, int n, T &out);
 };
 
-#endif
+// #endif

@@ -1,4 +1,5 @@
 #include "Design.h"
+Design::Design(){}
 
 Design::Design(int v, int b, int r) {
     this->v = v;
@@ -27,7 +28,8 @@ Cost Design::probeMove(Move m) {
     // Allocating an new object each probe is unnecessarily expensive.
     // This can be worked around by instead updating some static object.
     // However, for this assignment allocating here should be fine...
-    return Cost(/* ... */);
+    Cost cost = m.getCost();
+    return cost;
 }
 
 /**
@@ -38,6 +40,7 @@ Cost Design::probeMove(Move m) {
  */
 void Design::commitMove(Move m) {
     /* ... */
+    m.getCost();
 }
 
 /**
@@ -50,6 +53,7 @@ void Design::commitMove(Move m) {
  */
 void Design::updateDotProductFromMove(Move m) {
 /* ... */
+    m.getCost();
 }
 
 /**

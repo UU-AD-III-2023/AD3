@@ -9,6 +9,7 @@
  *
  */
 Move::Move(){
+    this->cost=Cost();
 };
 
 Cost Move::getCost(){
@@ -16,5 +17,5 @@ Cost Move::getCost(){
 };
 
 void Move::setCost(Cost cost){
-    cost = cost;
+    this->cost = cost;
 };

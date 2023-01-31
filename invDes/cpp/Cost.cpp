@@ -1,20 +1,20 @@
 #include "Cost.h"
 
-Cost::Cost(/* ... */) {
-    /* ... */
-    }
+Cost::Cost() {
+    this->value = 0;
+}
 
 string Cost::toString() {
     /* ... */
     return "";
-    }
+}
 
 bool Cost::isEqualTo(Cost c) {
     /* ... */
-    return false;
-    }
+    return c.value>0;
+}
 
 bool Cost::isBetterThan(Cost c) {
     /* ... */
-    return false;
-    }
+    return c.value==0;
+}

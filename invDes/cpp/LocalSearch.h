@@ -23,10 +23,11 @@ private:
   Design design;
   int v,b,r,lb;
   Tabu tabu;
-  int it, bestLambda;
+  int it;// bestLambda;
   int alpha, beta;
 
 public:
+  LocalSearch();
   LocalSearch(int v, int b, int r, int alpha, int beta);
   int calculateLb();
   void run();

@@ -6,14 +6,14 @@ DEBUGFLAGS:=-g
 .PHONY: all clean
 all: submission
 
-submission: main.o
+submission: LocalSearch.o Design.o DotProduct.o Move.o Tabu.o Cost.o InvDes.o 
 	$(CXX) $(CXXFLAGS) $(RELEASEFLAGS) -o InvDes $^
 
-main.o: main.cc
+main.o: LocalSearch.cpp Design.cpp DotProduct.cpp Move.cpp Tabu.cpp Cost.cpp InvDes.cc
 	$(CXX) $(CXXFLAGS) $(RELEASEFLAGS) -c $^
 
 clean:
 	$(RM) *.o InvDes
 
-debug: main.cc
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -D DEBUG -o InvDes main.cc
+debug: InvDes.cc
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -D DEBUG -o InvDes InvDes.cc

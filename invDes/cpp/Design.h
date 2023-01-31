@@ -19,6 +19,7 @@ int b;
 int r;
 
 public:
+Design();
 Design(int v, int b, int r);
 void init();
 Cost probeMove(Move m);

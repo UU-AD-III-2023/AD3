@@ -1,9 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <sstream>
 
 #include "LocalSearch.h"
 
 using std::vector;
+using std::string;
+using std::stringstream;
 
 class InvDes {
 
@@ -14,6 +18,7 @@ class InvDes {
             {10, 325, 100}, {15, 350, 100}, {9, 300, 100}, {12, 200, 75}, {10, 360, 120}};
 
     public:
+        InvDes(){};
         void main(int argc, char * argv[]) {
             // Paramters for tuning local search algorithm, does not have to be int.
             int alpha = 0;
@@ -36,8 +41,11 @@ class InvDes {
 
         void runSolver(int v, int b, int r, int alpha, int beta) {
             // Todo: Add asserts
-            printf("Solving instance v: ", v, " b: ", b,  " r: ", r, 
-            ". With parameters alpha: ", alpha, " beta: ", beta);
+            stringstream output;
+            output << "Solving instance v: " << v << " b: " << b <<  " r: " << r << 
+            ". With parameters alpha: " << alpha << " beta: " << beta << "\n";
+            string out = output.str();
+            std::cout << out;
             LocalSearch s = LocalSearch(v, b, r, alpha, beta);
             s.run();
         }
@@ -46,6 +54,7 @@ class InvDes {
 
 int main (int argc, char * argv[]) {
     // Initialise v,b,r (argv)
-    
+    InvDes solver = InvDes();
+    solver.main(argc, argv);
     return 0;
 };
