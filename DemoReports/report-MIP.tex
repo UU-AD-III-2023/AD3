@@ -16,12 +16,24 @@ We define the variables first:
   \item Let $T$ be a matrix of dimension $z \times z$ with the travel time from one zone to the other.
 \end{itemize}
 
-We create a cost matrix $C$, which is generated from multiplying each line of the time matrix $T_i$ with the $i$-th value of the demand tuple. We create a rank 3 tensor of allocations $A_{s, i, j}$, which describes how many vehicles from station $s$ in zone $j$ are chosen to get to zone $i$. The value for each combination of $A_{s, i, j}$ is in the interval $[0, v]$, as we each station cannot have more then $v$ vehicles. \\
-Let $\mathbf{Z}$ be a binary matrix of dimension $z \times z$ that for the each pair of zones $i, j$ has a one, if a car from zone $j$ is allocated to help in zone $i$, and let $\mathbf{s}$ be a binary vector of length $z$ which is $1$ if there is a station in the zone.  \\
-In addition we have the constrain that for each zone we are sending vehicles $i$, the number of vehicles we allocate is equal to $c$:
+We create a cost matrix $C$, which is generated from multiplying each line of the time matrix $T_i$ with the $i$-th value of the demand tuple. In addition we have a binary vector $\mathbf{s}$ of length $z$  where the $i$-th value is $1$ if we have a station zone $i$. Finally we have a matrix $A$ of dimension $z \times z$. We have these three constrains: 
+\begin{align}
+	A_{i, j} \in [0, v] & \quad \forall i, j \in [1, z] \\
+	\sum_{i=1}^{z} A_{i, j} = c & \quad \forall j \in [1, z] \\
+	\norm{\mathbf{s}} = s
+\end{align}
+Our cost function is given by: 
 \begin{equation*}
-	\sum_{k=1}^{s} \sum_{j=1}^{z} A_{s, i, j} \cdot Z_{i, j} \cdot s_{j} = c
+	\mathsf{cost} = \sum_{i=1}^z \sum{j=1}^z A_{i, j} \cdot C_{i, j}
 \end{equation*}
+
+ 
+% We create a rank 3 tensor of allocations $A_{s, i, j}$, which describes how many vehicles from station $s$ in zone $j$ are chosen to get to zone $i$. The value for each combination of $A_{s, i, j}$ is in the interval $[0, v]$, as we each station cannot have more then $v$ vehicles. \\
+% Let $\mathbf{Z}$ be a binary matrix of dimension $z \times z$ that for the each pair of zones $i, j$ has a one, if a car from zone $j$ is allocated to help in zone $i$, and let $\mathbf{s}$ be a binary vector of length $z$ which is $1$ if there is a station in the zone.  \\
+% In addition we have the constrain that for each zone we are sending vehicles $i$, the number of vehicles we allocate is equal to $c$:
+%\begin{equation*}
+%	\sum_{k=1}^{s} \sum_{j=1}^{z} A_{s, i, j} \cdot Z_{i, j} \cdot s_{j} = c
+%\end{equation*}
 
 
 % The problem we want to optimise is to select $s$ zones, we will represent in a binary vector $s$ with $\norm{s} = s$ in which we will place our service stations. Our objective is to minimise the sum over the average travel time of the $c$ closest vehicles of each zone multiplied by the demand of the zone. For each zone, we need to determine the closest $c$ vehicles from the $N$ we have at our disposal. As each station has $v$ vehicles at its disposal, we take $v$ vehicles from the  $\Floor{\frac{c}{s}}$ closest station from a zone $z_i$ and $c \mod s$ from the $\Floor{\frac{c}{s}} + 1$ closest station. 
