@@ -28,18 +28,18 @@ set Stations := 1..s;
 param cost {i in Zones, j in Zones} := Time[j,i]/c * Demand[i];
 
 # selected zone j for stations
-var selectedZone {Stations, Zones}, binary;
+var selectedZone {Zones}, binary;
 # selected zone j to place budgetted service stations sending to zone i allocation[station, i, j]
-var allocation {Stations, Zones, Zones} >=0, <=v;
+var allocation {Zones, Zones} >=0, <=v;
 
 # minimize the sum over all the zones of the average travel time of the c closest vehicles of each zone, multiplied by the demand of the zone.
-minimize TotalCost: sum {i in Zones, j in Zones, k in Stations} allocation[k,i,j]*cost[i,j];
+minimize TotalCost: sum {i in Zones, j in Zones} allocation[i,j]*cost[i,j];
 
 # Zone i totals to 3
-subject to cLimit{i in Zones}: sum {j in Zones, k in Stations} allocation[k,i,j] = c;
+subject to cLimit{i in Zones}: sum {j in Zones} allocation[i,j] = c;
 
 # A station exists in only zone j and allocation to i Zone may vary
-subject to selectedlimit{S in Stations, j in Zones, i in Zones}: allocation[S,i,j] <= selectedZone[S,j]*v;
+subject to selectedlimit{j in Zones, i in Zones}: allocation[i,j] <= selectedZone[j]*v;
 
 # There exists only s Stations
-subject to slimit: sum{S in Stations, j in Zones} selectedZone[S,j] = s;
+subject to slimit: sum{j in Zones} selectedZone[j] = s;
