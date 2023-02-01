@@ -1,52 +1,35 @@
-#include <iostream>
-#include <set>
-using namespace std;
+#include "LocalSearch.h"
 
-class Row {
-protected:
-  int length;
-  set<int> row; // soled using sets
+LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
+  this->v = v;
+  this->b = b;
+  this->r = r;
+  this->lb = calculateLb();
+  this->design = Design(v, b, r);
+  this->tabu = Tabu(0/* ... */, v, b, r);
+  this->it = 1;
+  this->alpha = alpha;
+  this->beta = beta;
+}
 
-public:
-  Row(int length, int coloured_fields) {
-    while (row.size() > coloured_fields) {
-      int x = rand();
-      row.insert(x);
-    }
-  }
-  // Calculating the dot product between 2 rows.
-  int DotProduct(Row row) {
-    set<int> commun;
-    set_intersection(row.begin(), row.end(), row.row.begin(), row.row.end(),
-                     inserter(commun, commun.begin()));
-    return commun.size();
-  }
+LocalSearch::LocalSearch(){}
+
+int LocalSearch::calculateLb(){
+  return 0;
 };
+void LocalSearch::run(){
 
-class Matrix {
-protected:
-  int row;
-  int columns;
-  set<Row> rows;
-  int max_dotprod;
-
-public:
-  Matrix(int aRow, int aColumn, int aColoured) {
-    row = aRow;
-    columns = aColumn;
-    for (int i = 0; i < columns; i++) {
-      rows.add(Row(row, aColoured));
-    }
-  }
-  int getLargestDotProduct() {
-
-    int val = 0;
-    for () {
-    }
-  }
-} return val;
-}
-}
-;
-
-int main() { return 0; }
+};
+Move LocalSearch::getBestNeighbour(){
+  return Move();
+};
+Move LocalSearch::getFirstImprovingNeighbour(){
+  return Move();
+};
+Move LocalSearch::getRandomNeighbour(){
+  return Move();
+};
+string LocalSearch::getOutput(){
+  // return ("",v," ",b," ",r," ",lb," ",bestLambda,"\n ",design.toString());
+  return "bestLambda";
+};

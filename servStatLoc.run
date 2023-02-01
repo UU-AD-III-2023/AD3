@@ -3,13 +3,15 @@
 
 # Set solver parameters
 option relax_integrality 0;
-option cplex_options 'timelimit = 30000';
+option cplex_options 'timelimit = 300';
 
 # Solve problem
 solve;
 
-display TotalTime;
-display TotalTime/c/z;
+display TotalCost;
 display selectedZone;
+#display allocation;
+#display selectedlimit;
+#display cLimit;
 
 quit;
