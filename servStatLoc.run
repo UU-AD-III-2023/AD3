@@ -11,7 +11,8 @@ solve;
 display TotalCost;
 display TotalCost/c;
 display selectedZone;
-# display vSelectiontoZ;
-# display TimeSj;
+display allocation;
+display selectedlimit;
+display cLimit;
 
 quit;
