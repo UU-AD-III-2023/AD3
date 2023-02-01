@@ -1,4 +1,4 @@
- % !TEX root = demoReport.tex
+% !TEX root = demoReport.tex
 \section*{Problem 1: Mixed Integer Programming (MIP)}
 
 \newcommand{\SolverMIP}{\todo{Gurobi}\xspace}  % or CPLEX, or Xpress, or Cbc
@@ -15,33 +15,42 @@ We define the variables first:
   \item Let $d$ be a tuple of length $z$ giving the demand for each zone $z$.
   \item Let $T$ be a matrix of dimension $z \times z$ with the travel time from one zone to the other.
 \end{itemize}
-The problem we want to optimise is to select $s$ zones, we will represent in a binary vector $s$ with $\norm{s} = s$ in which we will place our service stations. Our objective is to minimise the sum over the average travel time of the $c$ closest vehicles of each zone multiplied by the demand of the zone. For each zone, we need to determine the closest $c$ vehicles from the $N$ we have at our disposal. As each station has $v$ vehicles at its disposal, we take $v$ vehicles from the  $\Floor{\frac{c}{s}}$ closest station from a zone $z_i$ and $c \mod s$ from the $\Floor{\frac{c}{s}} + 1$ closest station. 
-Let $s_i$ be the zones we choose to position our stations in. Then we get the linear function for the zone $z_j$: 
 
+We create a cost matrix $C$, which is generated from multiplying each line of the time matrix $T_i$ with the $i$-th value of the demand tuple. We create a rank 3 tensor of allocations $A_{s, i, j}$, which describes how many vehicles from station $s$ in zone $j$ are chosen to get to zone $i$. The value for each combination of $A_{s, i, j}$ is in the interval $[0, v]$, as we each station cannot have more then $v$ vehicles. \\
+Let $\mathbf{Z}$ be a binary matrix of dimension $z \times z$ that for the each pair of zones $i, j$ has a one, if a car from zone $j$ is allocated to help in zone $i$, and let $\mathbf{s}$ be a binary vector of length $z$ which is $1$ if there is a station in the zone.  \\
+In addition we have the constrain that for each zone we are sending vehicles $i$, the number of vehicles we allocate is equal to $c$:
 \begin{equation*}
-	f_j(s_1, s_2, \cdots, s_s) = \sum_{k=1}^{\Floor{\frac{c}{s}}} T_{s_k, j} \cdot v +  T_{s_{\Floor{\frac{c}{s}} + 1}, j} \:\cdot(c \bmod s)
+	\sum_{k=1}^{s} \sum_{j=1}^{z} A_{s, i, j} \cdot Z_{i, j} \cdot s_{j} = c
 \end{equation*}
-As this function obligates us to chose which zones $s$ to take, we need to write this differently. Therefore, let $p$, $q$ and $r$ be three binary vectors of length $z$. These vectors shall follow the constrain: 
-\begin{align*}
- \norm{p} & = \Floor{\frac{c}{s}} \\
- \norm{q} & = 1 \\
- \norm{r} & = z - \Floor{\frac{c}{s}} - 1 \\
- p \cdot q & = 0 \\
- p \cdot r & = 0 \\
- q \cdot r & = 0 \\
- p \cdot s & = \Floor{\frac{c}{s}} 
-\end{align*}
-Let $T_j$ be the $j$-th line of the matrix $T$. This allows us to rewrite the function $f_j$ differently: 
-\begin{equation*}
-	f_j(\vec s) = \min_{p, q, r} f_j(p, q, r) = v p \cdot T_j + (c \bmod s) q \cdot T_j + 0 \cdot r \cdot T_j
-\end{equation*}
-For all zones we have the function we want to minimilize
-
-\begin{align*}
-	f(p_1, p_2, \cdots, p_z, q_1, q_2, \cdots, p_z) & = \sum_{j=1}^{z} \frac{1}{c} \min_{p_j, q_j}f_j(p_j, q_j) \cdot d_j
-\end{align*}
 
 
+% The problem we want to optimise is to select $s$ zones, we will represent in a binary vector $s$ with $\norm{s} = s$ in which we will place our service stations. Our objective is to minimise the sum over the average travel time of the $c$ closest vehicles of each zone multiplied by the demand of the zone. For each zone, we need to determine the closest $c$ vehicles from the $N$ we have at our disposal. As each station has $v$ vehicles at its disposal, we take $v$ vehicles from the  $\Floor{\frac{c}{s}}$ closest station from a zone $z_i$ and $c \mod s$ from the $\Floor{\frac{c}{s}} + 1$ closest station. 
+% Let $s_i$ be the zones we choose to position our stations in. Then we get the linear function for the zone $z_j$: 
+%
+%\begin{equation*}
+%	f_j(s_1, s_2, \cdots, s_s) = \sum_{k=1}^{\Floor{\frac{c}{s}}} T_{s_k, j} \cdot v +  T_{s_{\Floor{\frac{c}{s}} + 1}, j} \:\cdot(c \bmod s)
+%\end{equation*}
+%As this function obligates us to chose which zones $s$ to take, we need to write this differently. Therefore, let $p$, $q$ and $r$ be three binary vectors of length $z$. These vectors shall follow the constrain: 
+%\begin{align*}
+% \norm{p} & = \Floor{\frac{c}{s}} \\
+% \norm{q} & = 1 \\
+% \norm{r} & = z - \Floor{\frac{c}{s}} - 1 \\
+% p \cdot q & = 0 \\
+% p \cdot r & = 0 \\
+% q \cdot r & = 0 \\
+% p \cdot s & = \Floor{\frac{c}{s}} 
+%\end{align*}
+%Let $T_j$ be the $j$-th line of the matrix $T$. This allows us to rewrite the function $f_j$ differently: 
+%\begin{equation*}
+%	f_j(\vec s) = \min_{p, q, r} f_j(p, q, r) = v p \cdot T_j + (c \bmod s) q \cdot T_j + 0 \cdot r \cdot T_j
+%\end{equation*}
+%For all zones we have the function we want to minimilize
+%
+%\begin{align*}
+%	f(p_1, p_2, \cdots, p_z, q_1, q_2, \cdots, p_z) & = \sum_{j=1}^{z} \frac{1}{c} \min_{p_j, q_j}f_j(p_j, q_j) \cdot d_j
+%\end{align*}
+%
+%
 \paragraph{Task~b: Implementation.}
 Our model \texttt{servStatLoc.mod} is \todo{uploaded} with this
 report: we \todo{checked} that its constraints and objective function
