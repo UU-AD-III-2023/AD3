@@ -23,12 +23,20 @@ set Zones := 1..z;
 param Demand {Zones} >= 0; # Demand[i] = demand of zone i
 param Time {Zones,Zones} >= 0; # Time[i,j] = time from zone i to j
 
-# selected zone to place budgetted service stations
-var selectedZone {Zones} >=0, <= s*v, integer;
+set Stations := 1..s;
+
+# Cost of Placing Station at Zone Z (per vehicle)
+param cost {i in Zones, j in Zones} := Time[j,i] * Demand[i];
+
+# selected zone j for stations
+var selectedZone {Stations, Zones}, binary;
+
+# selected zone j to place budgetted service stations sending to zone i
+var allocation {Stations, Zones, Zones} >=0, <=v, integer;
 
 # minimize the sum over all the zones of the average travel time of the c closest vehicles of each zone, multiplied by the demand of the zone.
-# Time from j to i * demand of i * number of stations from j to i
-minimize TotalTime: sum {i in Zones, j in Zones} Time[j,i]*Demand[i]*selectedZone[j];
+minimize TotalCost: sum {i in Zones, j in Zones, k in Stations} allocation[k,i,j]*cost[i,j];
 
-subject to stationLimit : sum {i in Zones} selectedZone[i] = c; # C stations
-# subject to serviceLimit {i in Zones}: sum {j in Zones} selectedZone[i,j] <= s*v; # maximum service station vehicles
+subject to cLimit{i in Zones}: sum {j in Zones, k in Stations} allocation[k,i,j] = c;
+subject to selectedlimit{S in Stations, j in Zones}: sum {i in Zones} allocation[S,i,j] <= selectedZone[S,j]*15;
+subject to slimit: sum{S in Stations, j in Zones} selectedZone[S,j] = s;

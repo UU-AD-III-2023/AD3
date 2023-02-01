@@ -8,8 +8,11 @@ option cplex_options 'timelimit = 30000';
 # Solve problem
 solve;
 
-display TotalTime;
-display TotalTime/c/z;
+display TotalCost;
+display TotalCost/c;
 display selectedZone;
+display allocation;
+display selectedlimit;
+display cLimit;
 
 quit;
