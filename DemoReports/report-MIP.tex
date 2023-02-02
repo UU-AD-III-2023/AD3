@@ -2,7 +2,7 @@
 \section*{Problem 1: Mixed Integer Programming (MIP)}
 
 \newcommand{\SolverMIP}{\todo{Gurobi}\xspace}  % or CPLEX, or Xpress, or Cbc
-\newcommand{\TimeoutMIP}{\todo{300.00}}  % timeout, in CPU seconds; MIN 300.00
+\newcommand{\TimeoutMIP}{100000000}  % timeout, in CPU seconds; MIN 300.00
 \newcommand{\norm}[1]{\Vert {#1} \Vert}
 
 \paragraph{Task~a: Model.}
@@ -16,12 +16,24 @@ We define the variables first:
   \item Let $T$ be a matrix of dimension $z \times z$ with the travel time from one zone to the other.
 \end{itemize}
 
-We create a cost matrix $C$, which is generated from multiplying each line of the time matrix $T_i$ with the $i$-th value of the demand tuple. We create a rank 3 tensor of allocations $A_{s, i, j}$, which describes how many vehicles from station $s$ in zone $j$ are chosen to get to zone $i$. The value for each combination of $A_{s, i, j}$ is in the interval $[0, v]$, as we each station cannot have more then $v$ vehicles. \\
-Let $\mathbf{Z}$ be a binary matrix of dimension $z \times z$ that for the each pair of zones $i, j$ has a one, if a car from zone $j$ is allocated to help in zone $i$, and let $\mathbf{s}$ be a binary vector of length $z$ which is $1$ if there is a station in the zone.  \\
-In addition we have the constrain that for each zone we are sending vehicles $i$, the number of vehicles we allocate is equal to $c$:
+We create a cost matrix $C$, which is generated from multiplying each line of the time matrix $T_i$ with the $i$-th value of the demand tuple. In addition we have a binary vector $\mathbf{s}$ of length $z$  where the $i$-th value is $1$ if we have a station zone $i$. Finally we have a matrix $A$ of dimension $z \times z$. We have these three constrains: 
+\begin{align}
+	A_{i, j} \in [0, v] & \quad \forall i, j \in [1, z] \\
+	\sum_{i=1}^{z} A_{i, j} = c & \quad \forall j \in [1, z] \\
+	\norm{\mathbf{s}} = s
+\end{align}
+Our cost function is given by: 
 \begin{equation*}
-	\sum_{k=1}^{s} \sum_{j=1}^{z} A_{s, i, j} \cdot Z_{i, j} \cdot s_{j} = c
+	\mathsf{cost} = \sum_{i=1}^z \sum{j=1}^z A_{i, j} \cdot C_{i, j}
 \end{equation*}
+
+ 
+% We create a rank 3 tensor of allocations $A_{s, i, j}$, which describes how many vehicles from station $s$ in zone $j$ are chosen to get to zone $i$. The value for each combination of $A_{s, i, j}$ is in the interval $[0, v]$, as we each station cannot have more then $v$ vehicles. \\
+% Let $\mathbf{Z}$ be a binary matrix of dimension $z \times z$ that for the each pair of zones $i, j$ has a one, if a car from zone $j$ is allocated to help in zone $i$, and let $\mathbf{s}$ be a binary vector of length $z$ which is $1$ if there is a station in the zone.  \\
+% In addition we have the constrain that for each zone we are sending vehicles $i$, the number of vehicles we allocate is equal to $c$:
+%\begin{equation*}
+%	\sum_{k=1}^{s} \sum_{j=1}^{z} A_{s, i, j} \cdot Z_{i, j} \cdot s_{j} = c
+%\end{equation*}
 
 
 % The problem we want to optimise is to select $s$ zones, we will represent in a binary vector $s$ with $\norm{s} = s$ in which we will place our service stations. Our objective is to minimise the sum over the average travel time of the $c$ closest vehicles of each zone multiplied by the demand of the zone. For each zone, we need to determine the closest $c$ vehicles from the $N$ we have at our disposal. As each station has $v$ vehicles at its disposal, we take $v$ vehicles from the  $\Floor{\frac{c}{s}}$ closest station from a zone $z_i$ and $c \mod s$ from the $\Floor{\frac{c}{s}} + 1$ closest station. 
@@ -57,21 +69,20 @@ report: we \todo{checked} that its constraints and objective function
 are linear (and we are aware that four points will otherwise be
 deducted from our score for this problem).
 %
-We chose the MIP solver~\SolverMIP for our experiments, which we ran
-\todo{on the NEOS server or
+We chose the MIP solver~\SolverMIP for our experiments, which we ran on the NEOS server for MINTO/AMPL with a CPU time set to 4 hours. 
   % specification of the ThinLinc Linux hosts of the IT department,
   % where the academic site license for Gurobi is installed, but note
   % that no classroom license for AMPL is installed there, so replace
   % if need be by a similar-looking specification of your own hardware:
-  under Linux Ubuntu~18.04 ($64$~bit) on an Intel Xeon E5520 of
-  $2.27$~GHz, with $4$~processors of $4$~cores each, with a $70$~GB
-  RAM and an $8$~MB L3 cache (a ThinLinc computer of the IT
-  department)}.
+  % under Linux Ubuntu~18.04 ($64$~bit) on an Intel Xeon E5520 of
+  % $2.27$~GHz, with $4$~processors of $4$~cores each, with a $70$~GB
+  % RAM and an $8$~MB L3 cache (a ThinLinc computer of the IT
+  % department)}.
 
 \paragraph{Task~c: 10 Zones.}
 The results are in Table~\ref{tab:res:mip}.
-%
-When~$s$ increases, the optimal objective value~\todo{\filler}.
+% 
+When $s$ increases, the optimal objective value decrease, because we have more stations, therefore the average distance is lower, because the new stations may be closer to some of the zones then the initial stations. 
 
 \paragraph{Task~d: 20 Zones.}
 The results are in Table~\ref{tab:res:mip}.
@@ -85,25 +96,29 @@ The results are in Table~\ref{tab:res:mip}.
 The results are in Table~\ref{tab:res:mip}.
 %
 Upon~$s=16$ service stations with~$v=1$ vehicle each, the optimal
-objective value is \todo{\filler} the one for~$s=8$ and~$v=2$, because
-\todo{\filler}.
+objective value is $0.013908$ the one for~$s=8$ and~$v=2$, because
+$0.116972$.
 
 \paragraph{Task~g: 120 Zones.}
 The results are in Table~\ref{tab:res:mip}.
 %
-Our model \todo{does not time out}.
+Our model does not time out.
 % If it does time out, then see the demo sentence under Task h below!
 
 \paragraph{Task~h: 250 Zones.}
 The results are in Table~\ref{tab:res:mip}.
 %
-Our model \todo{times out, so our proposed algorithm for delivering a
-  not necessarily optimal solution in reasonable running time is
-  \filler}.
+Our model does not time out. % \todo{times out, so our proposed algorithm for delivering a
+%  not necessarily optimal solution in reasonable running time is
+%  \filler}.
 
 \paragraph{Task~i: Brute-Force Algorithm.}
 The size of the search space of a totally brute-force search algorithm
-is \todo{$\binom{z!}{\cos c} \cdot \log_s v$}, because \todo{\filler}.
+is 
+\begin{equation*}
+\binom{z}{s} = \frac{z!}{s! \cdot (z-s)!}  = z \cdot (z-1) \cdots (z-s+1),
+\end{equation*}
+because if we want to position $s$ objects in $z$ places. The first object we position has $z$ places it can go to, the second one hase $z-1$ possibilities, and so on until the last one that $z - s + 1$ options. High school basic combinatorics therefore give us the result above.
 
 The numbers of candidate solutions this brute-force search algorithm
 has to examine per second in order to match the reported runtime
@@ -132,11 +147,11 @@ We think that \todo{\filler}, because \todo{\filler}.
     solved to proven optimality, and~`n/a' for `non-applicable'
     otherwise.
     %% delete the following sentence:
-    \todo{(The sample performance of this demo report is made up,
-      except for the two optimal objective values!)}
+%    \todo{(The sample performance of this demo report is made up,
+%      except for the two optimal objective values!)}
     %
-  }
-  \label{tab:res:mip}
+  }\label{tab:res:mip}
+  
 \end{table}
 
 %%% Local Variables:
