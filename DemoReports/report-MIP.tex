@@ -115,7 +115,11 @@ Our model \todo{times out, so our proposed algorithm for delivering a
 
 \paragraph{Task~i: Brute-Force Algorithm.}
 The size of the search space of a totally brute-force search algorithm
-is \todo{$\binom{z!}{\cos c} \cdot \log_s v$}, because \todo{\filler}.
+is 
+\begin{equation*}
+\binom{z}{s} = \frac{z!}{s! \cdot (z-s)!}  = z \cdot (z-1) \cdots (z-s+1),
+\end{equation*}
+because if we want to position $s$ objects in $z$ places. The first object we position has $z$ places it can go to, the second one hase $z-1$ possibilities, and so on until the last one that $z - s + 1$ options. High school basic combinatorics therefore give us the result above.
 
 The numbers of candidate solutions this brute-force search algorithm
 has to examine per second in order to match the reported runtime
