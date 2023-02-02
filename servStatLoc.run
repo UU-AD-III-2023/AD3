@@ -10,8 +10,5 @@ solve;
 
 display TotalCost;
 display selectedZone;
-#display allocation;
-#display selectedlimit;
-#display cLimit;
 
 quit;
