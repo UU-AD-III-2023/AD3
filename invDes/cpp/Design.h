@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #ifndef DOTP
 #include "DotProduct.h"
@@ -11,6 +12,7 @@
 #endif
 
 using std::string;
+using std::vector;
 
 class Design {
 private:
@@ -18,7 +20,18 @@ int v;
 int b;
 int r;
 
+vector<vector<int>> invNorm;
+vector<vector<int>> possibleNorm;
+
+vector<vector<int>> selections;
+
+Matrix<int> matrix;
+
+
 public:
+// baskets add investment
+vector<vector<int>> portfolio;
+
 Design();
 Design(int v, int b, int r);
 void init();

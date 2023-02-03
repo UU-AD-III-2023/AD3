@@ -16,6 +16,10 @@
  */
 class Move {
 public:
+    int row;
+    int oldIdx;
+    int newIdx;
+
     Cost cost;
     Move();
     Cost getCost();

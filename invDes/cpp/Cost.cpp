@@ -1,7 +1,7 @@
 #include "Cost.h"
 
 Cost::Cost() {
-    this->value = 0;
+    this->value = -1;
 }
 
 string Cost::toString() {
@@ -11,10 +11,10 @@ string Cost::toString() {
 
 bool Cost::isEqualTo(Cost c) {
     /* ... */
-    return c.value>0;
+    return this->value==c.value;
 }
 
 bool Cost::isBetterThan(Cost c) {
     /* ... */
-    return c.value==0;
+    return this->value<c.value;
 }

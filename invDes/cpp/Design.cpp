@@ -14,6 +14,21 @@ Design::Design(int v, int b, int r) {
  */
 void Design::init() {
     /* ... */
+    for (int i=0; i<v;i++){
+        vector<int> row(b,0);
+        vector<int> tmpIdxs{};
+        while (tmpIdxs.size()<b) {
+            int idx = rand()%b;
+            if (count(tmpIdxs.begin(), tmpIdxs.end(),idx)) {
+                tmpIdxs.push_back(idx);
+            }
+        }
+        for (int it=0; it < tmpIdxs.size(); it++){
+            row[tmpIdxs[it]] = 1;
+        }
+        selections.push_back(tmpIdxs);
+        portfolio.push_back(row);
+    }
 }
 
 /**
@@ -24,11 +39,32 @@ void Design::init() {
  */
 Cost Design::probeMove(Move m) {
     /* ... */
+    int row = m.row;
+    int old = m.oldIdx;
+    int newI = m.newIdx;
 
     // Allocating an new object each probe is unnecessarily expensive.
     // This can be worked around by instead updating some static object.
     // However, for this assignment allocating here should be fine...
     Cost cost = m.getCost();
+    if (cost.value < 0){
+        std::swap(portfolio[row][old],portfolio[row][newI]);
+        int worst=0;
+
+        //(vector<T> a, vector<vector<T>> b, int j, T &out)
+        for (int j = 0; j<v; j++) {
+            int val;
+            if (j!=row){
+                matrix.dot_prod(portfolio[row], portfolio[j], val);
+            }
+            if (val > worst){
+                worst=val;
+            }
+        }
+        cost.value = worst;
+        m.setCost(cost);
+    }
+
     return cost;
 }
 
