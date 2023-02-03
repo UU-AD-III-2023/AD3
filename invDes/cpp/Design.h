@@ -6,8 +6,8 @@
 
 #ifndef DOTP
 #include "DotProduct.h"
-#endif
-#ifndef MOVE
+// #endif
+// #ifndef MOVE
 #include "Move.h"
 #endif
 
@@ -25,12 +25,12 @@ vector<vector<int>> possibleNorm;
 
 vector<vector<int>> selections;
 
-Matrix<int> matrix;
-
+Matrix matrix;
 
 public:
 // baskets add investment
 vector<vector<int>> portfolio;
+vector<vector<int>> chkpt;
 
 Design();
 Design(int v, int b, int r);
@@ -41,4 +41,5 @@ void updateDotProductFromMove(Move m);
 void saveDesign();
 void restoreSavedDesign();
 string toString();
+int dotCost(int row);
 };

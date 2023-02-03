@@ -1,4 +1,7 @@
 #include "LocalSearch.h"
+#include <sstream>
+
+using std::stringstream;
 
 LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
   this->v = v;
@@ -39,7 +42,11 @@ int LocalSearch::calculateLb(){
 
 void LocalSearch::run(){
   design.init();
-  
+
+  string output = getOutput();
+  std::cout << "\nlb: " << lb;
+  std::cout << output;
+
 };
 Move LocalSearch::getBestNeighbour(){
   return Move();
@@ -52,5 +59,5 @@ Move LocalSearch::getRandomNeighbour(){
 };
 string LocalSearch::getOutput(){
   // return ("",v," ",b," ",r," ",lb," ",bestLambda,"\n ",design.toString());
-  return "bestLambda";
+  return design.toString();
 };

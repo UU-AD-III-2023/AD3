@@ -1,13 +1,10 @@
 # include "DotProduct.h"
-#include <vector>
 
-using std::vector;
-
-template<class T> Matrix<T>::Matrix(){};
+Matrix::Matrix(){};
 
 // j Column, on vector on nth Row
-template<class T> void Matrix<T>::dot_prod(vector<T> a, vector<T> b, T &out) {
-	T dotp = 0;
+void Matrix::dot_prod(vector<int> a, vector<int> b, int &out) {
+	int dotp = 0;
 	int n = a.size();
 
 	this->a_int=a;

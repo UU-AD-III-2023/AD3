@@ -9,13 +9,13 @@
 using std::vector;
 
 // b[n][size]
-template<class T> class Matrix {
+class Matrix {
 public:
-	vector<T> a_int; 
-	vector<T> b_int;
+	vector<int> a_int; 
+	vector<int> b_int;
     // void initialise() {}
 	Matrix();
-	void dot_prod(vector<T> a, vector<T> b, T &out);
+	void dot_prod(vector<int> a, vector<int> b, int &out);
 };
 
 // #endif
