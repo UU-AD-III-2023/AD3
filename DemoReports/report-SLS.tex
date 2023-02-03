@@ -144,45 +144,59 @@ We chose the high-performance programming language C++, for
 which a compiler is available on the Linux
 computers of the IT department.  All source code is \todo{uploaded}
 with this report.  The compilation and running instructions are
-\todo{\filler}.
+to have all the \textsf{.cpp} files, \textsf{.h} files, \textsf{.cc} file and the makefile in a folder with the terminal in the folder, enter the commands:
+\begin{center}
+\textsf{make}
+\end{center}
+and run:
+\begin{center}
+\textsf{./InvDes {v} {b} {r} }
+\end{center}
+to run the executable generated on the input parameters of choice $v$,  $b$,  $r$
+\begin{center}
+\textsf{./InvDes}
+\end{center}
+to run the executable on the pre-input based on the java skeleton code provided. 
 
-An executable called \texttt{InvDes} reads the problem
-parameters~$v$,~$b$,~$r$ as command-line arguments and writes to
-standard output a line with the space-separated values
-of~$v$,~$b$,~$r$, the lower bound~$\text{lb}(\lambda)$ on~$\lambda$,
-and the achieved~$\lambda$, followed by one line per row of
-a~$v \times b$ matrix representing the solution, the~$0$-$1$ cell
-values being space-separated.
+%An executable called \texttt{InvDes} reads the problem
+%parameters~$v$,~$b$,~$r$ as command-line arguments and writes to
+%standard output a line with the space-separated values
+%of~$v$,~$b$,~$r$, the lower bound~$\text{lb}(\lambda)$ on~$\lambda$,
+%and the achieved~$\lambda$, followed by one line per row of
+%a~$v \times b$ matrix representing the solution, the~$0$-$1$ cell
+%values being space-separated.
 
-We validated the correctness of our implementation by \todo{checking
-  its outputs on many instances via the provided polynomial-time
-  solution checker}.
+Our solution is not complete, and we are aware, that this will lead to point deduction. 
+% We validated the correctness of our implementation by \todo{checking
+%  its outputs on many instances via the provided polynomial-time
+%  solution checker}.
 
 \paragraph{Task~c: Experiments.}
 %% Note the non-breaking spaces, typeset via ~, between numbers and
 %% their units:
-All experiments were run under
+We did not run any experiments, as our code is not completed. 
+%All experiments were run under
 % specification of the ThinLinc machines of the IT department, or
 % replace by a similar-looking specification of your own hardware:
-\todo{Linux Ubuntu~18.04 ($64$~bit) on an Intel Xeon E5520 of
-  $2.27$~GHz, with $4$~processors of $4$~cores each, with a $70$~GB
-  RAM and an~$8$~MB L3 cache (a ThinLinc computer of the IT
-  department).}
+%\todo{Linux Ubuntu~18.04 ($64$~bit) on an Intel Xeon E5520 of
+%  $2.27$~GHz, with $4$~processors of $4$~cores each, with a $70$~GB
+%  RAM and an~$8$~MB L3 cache (a ThinLinc computer of the IT
+%  department).}
 
-We fine-tuned the local-search parameters as follows.  \todo{Discuss
-  the impact of the local-search parameters~$\alpha$ and~$\beta$ on
-  the performance of your SLS algorithm.}
-
-\newcommand{\TimeoutSLS}{\todo{300.0}}  % timeout, in CPU seconds; MIN 300.0
-\newcommand{\RunsSLS}{\todo{5}}         % independent runs per instance; MIN 5
-
-The \todo{median} runtime (in seconds), \todo{median} number of steps,
-and \todo{median} achieved~$\lambda$ over~$\RunsSLS$ independent runs
-for each of the $21$~instances of the assignment instructions are
-given in Table~\ref{tab:res:sls}, for \todo{two} configurations
-%% remember: AT LEAST TWO, except for solo teams!
-of values for the local-search parameters~\todo{$\alpha$ and~$\beta$}.
-The timeout was~$\TimeoutSLS$~CPU seconds per run.%
+%We fine-tuned the local-search parameters as follows.  \todo{Discuss
+%  the impact of the local-search parameters~$\alpha$ and~$\beta$ on
+%  the performance of your SLS algorithm.}
+%
+%\newcommand{\TimeoutSLS}{\todo{300.0}}  % timeout, in CPU seconds; MIN 300.0
+%\newcommand{\RunsSLS}{\todo{5}}         % independent runs per instance; MIN 5
+%
+%The \todo{median} runtime (in seconds), \todo{median} number of steps,
+%and \todo{median} achieved~$\lambda$ over~$\RunsSLS$ independent runs
+%for each of the $21$~instances of the assignment instructions are
+%given in Table~\ref{tab:res:sls}, for \todo{two} configurations
+%%% remember: AT LEAST TWO, except for solo teams!
+%of values for the local-search parameters~\todo{$\alpha$ and~$\beta$}.
+%The timeout was~$\TimeoutSLS$~CPU seconds per run.%
 %
 %% Delete this footnote:
 %\footnote{\todo{Hint: In order to save a lot of time, it is very
@@ -227,7 +241,7 @@ The timeout was~$\TimeoutSLS$~CPU seconds per run.%
   \label{tab:res:sls}
 \end{table}
 
-We observe that \todo{\filler}, because \todo{\filler}.
+%We observe that \todo{\filler}, because \todo{\filler}.
 
 \paragraph{Task~d: Exact Algorithm.}
 An exact algorithm could work as follows: It could perform brute force search, trying out all possible non-equivalent configurations. Two configurations are equivalent, if a permutations of the rows leads to both configurations to be the same. This would lower the size of the search space. 
