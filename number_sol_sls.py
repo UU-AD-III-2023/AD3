@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.special as scc
 import math
+import pandas as pd
 
 
 input = open('data.csv', 'r')
@@ -19,5 +20,8 @@ while line != '':
     line = input.readline()
     line = line.replace("\n", '')
 
-print(time)
+data = list(zip(v, b, r, time))
+
+df = pd.DataFrame(data=data, columns=['v', 'b', 'r', 'time'])
+df.to_csv('test.csv', index=False, header=True)
 
