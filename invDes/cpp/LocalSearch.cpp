@@ -58,6 +58,5 @@ Move LocalSearch::getRandomNeighbour(){
   return Move();
 };
 string LocalSearch::getOutput(){
-  // return ("",v," ",b," ",r," ",lb," ",bestLambda,"\n ",design.toString());
   return design.toString();
 };

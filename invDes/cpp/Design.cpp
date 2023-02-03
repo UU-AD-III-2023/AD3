@@ -31,18 +31,20 @@ void Design::init() {
         auto rng = std::default_random_engine { rd() };
         std::shuffle(std::begin(row), std::end(row), rng);
 
-        // vector<int> tmpIdxs{rand()%b};
-        // std::cout<<(int(tmpIdxs.size())>r) << " size: "<<int(tmpIdxs.size()) <<" r: "<< r << "\n";
-        // while ((int(tmpIdxs.size())>r)) {
-        //     int idx = rand()%b;
-        //     if (count(tmpIdxs.begin(), tmpIdxs.end(),idx)) {
-        //         tmpIdxs.push_back(idx);
-        //     }
-        // }
-        // for (int it=0; it < int(tmpIdxs.size()); it++){
-        //     row[tmpIdxs[it]] = 1;
-        // }
-        // selections.push_back(tmpIdxs);
+        // Remember indexes for easy reference
+        vector<int> tsIdx(r,0);     //tmp selected indexes
+        vector<int> teIdx(b-r,0);   //tmp empty indexes
+        for (int j=0; j<b;j++){
+            if (row[j]==1){
+                tsIdx.push_back(j);
+            }
+            else {
+                teIdx.push_back(j);
+            }
+        }
+
+        selections.push_back(tsIdx);
+        blank.push_back(teIdx);
         portfolio.push_back(row);
     }
 }
@@ -60,6 +62,17 @@ int Design::dotCost(int row){
     }
     return worst;
 }
+
+// vector<Move> Design::getNeighbours(){
+//     for (int i=0; i<v; i++){
+//         for (int j=0; j<r; j++) {
+//             for (int k=0; k<(b-r); k++){
+//                 //PERMUTE ALL NEIGHBOURS
+
+//             }
+//         }
+//     }
+// }
 
 /**
  * Probe a move. This does not update change any internal data structures (or: any changes are

@@ -19,22 +19,24 @@ private:
 int v;
 int b;
 int r;
+vector<vector<int>> chkpt;
 
 vector<vector<int>> invNorm;
 vector<vector<int>> possibleNorm;
 
 vector<vector<int>> selections;
+vector<vector<int>> blank;
 
 Matrix matrix;
 
 public:
 // baskets add investment
 vector<vector<int>> portfolio;
-vector<vector<int>> chkpt;
 
 Design();
 Design(int v, int b, int r);
 void init();
+vector<Move> getNeighbours();
 Cost probeMove(Move m);
 void commitMove(Move m);
 void updateDotProductFromMove(Move m);
