@@ -11,10 +11,11 @@ using std::vector;
 // b[n][size]
 template<class T> class Matrix {
 public:
-	T a_int, b_int;
+	vector<T> a_int; 
+	vector<T> b_int;
     // void initialise() {}
 	Matrix();
-	void dot_prod(T a, T b, int j, int n, T &out);
+	void dot_prod(vector<T> a, vector<T> b, T &out);
 };
 
 // #endif

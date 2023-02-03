@@ -14,11 +14,32 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
 
 LocalSearch::LocalSearch(){}
 
-int LocalSearch::calculateLb(){
-  return 0;
-};
-void LocalSearch::run(){
+// def lb(r, v, b):
+//     a2 = (r*v) % b
+//     if a2 != 0:
+//         a1 = ((r*v) // b + 1)**2
+//     else:
+//         a1 = ((r*v) // b)**2
+//     a3 = ((r*v) // b)**2
+//     a4 = b - (r*v) % b
+//     up = a1*a2 + a3 *a4 - r*v
+//     down = v*(v-1)
+//     if up % down == 0:
+//         return up // down
+//     else:
+//         return up // down + 1
 
+int LocalSearch::calculateLb(){
+  int rv = r*v;
+
+  int top = std::pow(ceil((rv)/b),2)*(rv%b)+pow(floor(rv/b),2)*(b-(rv%b))-rv;
+  int bot = (v*(v-1));
+  return ceil(top/bot);
+};
+
+void LocalSearch::run(){
+  design.init();
+  
 };
 Move LocalSearch::getBestNeighbour(){
   return Move();
