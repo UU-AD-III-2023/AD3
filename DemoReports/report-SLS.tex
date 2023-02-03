@@ -1,8 +1,8 @@
 % !TEX root = demoReport.tex
 \section*{Problem 2: Stochastic Local Search (SLS)}
 
-\todo{
-  %% delete this paragraph, including its footnote:
+%\todo{
+%  %% delete this paragraph, including its footnote:
 %  The \emph{investment design problem} is about finding a matrix of
 %  $v$~rows and $b$~columns of~$0$-$1$ integer values, such that each
 %  row sums up to~$r$, with $v \geq 2$ and $b \geq r \geq 1$, and the
@@ -18,22 +18,22 @@
 %      reader has read th e problem statement in the assignment
 %      instructions.  We just repeat it here for self-sufficiency of
 %      this document.}}
-  
-  %% delete this paragraph:
+%  
+%  %% delete this paragraph:
 %  This is an abstract description of a problem that appears in
 %  finance: see Figure~\ref{fig:wallStreet}.  In a typical investment
 %  design in finance, we have $4 \leq v \leq 25$ and
 %  $250 \leq b \leq 500$, with $r \approx 100$.
-
-  %% delete this figure:
+%
+%  %% delete this figure:
 %  \begin{figure}[b]  % make it float to the bottom of a page
 %    \centering
 %    \includegraphics[height=5cm]{wallStreet}
 %    \caption{\todo{Wall Street (\copyright\ www.forbes.com, 2014)}}
 %    \label{fig:wallStreet}
 %  \end{figure}
-  
-  %% delete this paragraph, if you want:
+%  
+%  %% delete this paragraph, if you want:
   A lower bound on the number~$\lambda$ of shared elements of any
   pair among $v$~subsets of size~$r$ drawn from a given set of
   $b$~elements is given in~\cite{ASTRA:AOC}:
@@ -45,8 +45,8 @@
       {v(v-1)}
     }
   \end{equation}
-  
-}
+%  
+%}
 
 \paragraph{Task~a: SLS Algorithm.}
 \begin{enumerate}
@@ -87,44 +87,53 @@ The current state of the local search is given by a $v \times b$ matrix, where e
 
 %\todo{Describe a cost function, whose value is
 %  to be minimised during search.}
-\item Probing.  \todo{Describe how a neighbouring assignment, as
-  reachable by a move, can be probed efficiently:
+\item Probing.  
+%\todo{
+% Describe how a neighbouring assignment, as
+%  reachable by a move, can be probed efficiently:
+We randomly select one of the $b$ rows, look at the $r$ elements that have a value $1$ and determine, which one is the most expensive one. We look at the $r-v$ elements that have the value $0$ and see, which one is the cheapest one. The maximum change in the \textsf{cost} is $2$. If the cost does not decrease, we select an other row. 
   % 
-  describe how the cost function can be evaluated efficiently and
-  incrementally, and describe the data structures used to do so.
+%  describe how the cost function can be evaluated efficiently and
+%  incrementally, and describe the data structures used to do so.
+As the rows are represented in arrays, we can evaluate the cost difference from one element of the neighbourhood, we only need to evaluate the dot product of the new row and all the other rows, so we have a complexity of $O(v \cdot b)$
   % 
-  Give, without proof, the time complexity of probing; ideally, it is
-  (sub-)linear in the problem parameters.}
-\item Heuristic.  \todo{Describe a heuristic for exploring (via
-    probing) the neighbourhood and selecting a neighbouring assignment
-    to commit to.
-  % 
-  Decide if the neighbourhood is to be explored exhaustively and, if
-  so, how you determine when it was exhausted.
-  % 
-  Explain how to ensure that the same neighbour is not probed twice
-  during a given exploration.}
-\item Optimality.  \todo{Describe how you use a bound on the objective
-  value in order to terminate sometimes the search with proven
-  optimality, as part of the heuristic.}
-\item Meta-Heuristic.  \todo{Describe a meta-heuristic based on either
-  tabu search (strongly recommended for the investment design
-  problem) or simulated annealing.
-  % 
-  In case of tabu search: explain how the tabu list is represented;
-  choose (a formula for) its size; explain how fine-grained or
-  coarse-grained its content is, conceptually; and describe how it can
-  be looked up and maintained efficiently; note that the tabu list is
-  not necessarily an actual list, but rather a concept; make sure that
-  worsening moves are sometimes made.
-  % 
-  In case of simulated annealing: explain how you chose the cooling
-  function, cooling rate, and initial temperature.}
-\item Random Restarts.  \todo{Describe how to detect or guess that a
-  random restart should be made, as part of the meta-heuristic.}
-\item Optional Tweaks.  \todo{Describe improvements such as aspiration,
-    diversification, or other ideas that you use to improve your SLS
-    algorithm.}
+%  Give, without proof, the time complexity of probing; ideally, it is
+%  (sub-)linear in the problem parameters.
+%  }
+\item Heuristic. We make sure, that when in a given state, we do not probe the same row twice, so that the same neighbour is not probed twice. The entire neighbourhood does not have to be explored exhaustively, as move that reduced the cost is selected. Once we have probed each row, we know, that the neighbourhood is exhausted, and can make a random move instead, and add the current state in our tabu list. 
+%\todo{Describe a heuristic for exploring (via
+%    probing) the neighbourhood and selecting a neighbouring assignment
+%    to commit to.
+%  % 
+%  Decide if the neighbourhood is to be explored exhaustively and, if
+%  so, how you determine when it was exhausted.
+%  % 
+%  Explain how to ensure that the same neighbour is not probed twice
+%  during a given exploration.}
+\item Optimality. As the Equation \ref{eq:lb} gives a lower bound for the maximal cost (except of the input of $\Tuple{10, 8, 3}$, we have found an optimal solution, if we reached the lower bound given by Equation \ref{eq:lb}, and can stop the algorithm. 
+%\todo{Describe how you use a bound on the objective
+%  value in order to terminate sometimes the search with proven
+%  optimality, as part of the heuristic.}
+\item Meta-Heuristic. 
+%\todo{Describe a meta-heuristic based on either
+%  tabu search (strongly recommended for the investment design
+%  problem) or simulated annealing.
+%  % 
+%  In case of tabu search: explain how the tabu list is represented;
+%  choose (a formula for) its size; explain how fine-grained or
+%  coarse-grained its content is, conceptually; and describe how it can
+%  be looked up and maintained efficiently; note that the tabu list is
+%  not necessarily an actual list, but rather a concept; make sure that
+%  worsening moves are sometimes made.
+%  % 
+%  In case of simulated annealing: explain how you chose the cooling
+%  function, cooling rate, and initial temperature.}
+\item Random Restarts. We can make random restarts when we the probing does not yield a better result, instead of making a random move. 
+%\todo{Describe how to detect or guess that a
+%  random restart should be made, as part of the meta-heuristic.}
+%\item Optional Tweaks.  \todo{Describe improvements such as aspiration,
+%    diversification, or other ideas that you use to improve your SLS
+%    algorithm.}
 \end{enumerate}
 In summary, the local-search parameters (not the problem
 parameters~$v$,~$b$,~$r$) are~\todo{$\alpha$ and~$\beta$.}
@@ -175,14 +184,14 @@ of values for the local-search parameters~\todo{$\alpha$ and~$\beta$}.
 The timeout was~$\TimeoutSLS$~CPU seconds per run.%
 %
 %% Delete this footnote:
-\footnote{\todo{Hint: In order to save a lot of time, it is very
-    important that you write a script that conducts the experiments
-    for you and directly generates a result table (see the \LaTeX\
-    source code of Table~\ref{tab:res:sls} for how to do that), which
-    is then automatically imported, rather than manually copied, into
-    your report: each time you change the code, it suffices to re-run
-    that script and re-compile your report, without any tedious
-    copying!  The sharing of scripts is allowed and even encouraged.}}
+%\footnote{\todo{Hint: In order to save a lot of time, it is very
+%    important that you write a script that conducts the experiments
+%    for you and directly generates a result table (see the \LaTeX\
+%    source code of Table~\ref{tab:res:sls} for how to do that), which
+%    is then automatically imported, rather than manually copied, into
+%    your report: each time you change the code, it suffices to re-run
+%    that script and re-compile your report, without any tedious
+%    copying!  The sharing of scripts is allowed and even encouraged.}}
 
 \begin{table}[t]  % make it float to the top of a page
   \centering
@@ -228,8 +237,8 @@ An exact algorithm could work as follows: It could perform brute force search, t
 %\todo{discuss its features
 %  (for instance, does it perform brute-force search?).}
 %
-For one row, the search space is given by $\binom{v}{r}$. As we have a total of $b$ rows, there are in total $\binom{v}{r}^b$ possibilities. As the permutation of $b$ elements yield a group of size $b!$, the number of equivalent classes is $b!$. Hence, the total search space is of size 
-$$ \frac{\binom{v}{r}^{b}}{b!}$$
+For one row, the search space is given by $\binom{b}{r}$. As we have a total of $b$ rows, there are in total $\binom{b}{r}^v$ possibilities. As the permutation of $v$ elements yield a group of size $v!$, the number of equivalent classes is $b!$. Hence, the total search space is of size 
+$$ \frac{\binom{b}{r}^{v}}{v!}$$
  
 
 The number of candidate solutions this exact algorithm has to examine
@@ -239,7 +248,7 @@ according to Task~c, of our stochastic local search algorithm is given
 in the right-most column of Table~\ref{tab:res:sls}, for each instance
 solved to proven optimality.
 %
-We think that \todo{\filler}, because \todo{\filler}.
+%We think that \todo{\filler}, because \todo{\filler}.
 
 %%% Local Variables:
 %%% mode: latex
