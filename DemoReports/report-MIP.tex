@@ -2,7 +2,7 @@
 \section*{Problem 1: Mixed Integer Programming (MIP)}
 
 \newcommand{\SolverMIP}{\todo{Gurobi}\xspace}  % or CPLEX, or Xpress, or Cbc
-\newcommand{\TimeoutMIP}{100000000}  % timeout, in CPU seconds; MIN 300.00
+\newcommand{\TimeoutMIP}{14400}  % timeout, in CPU seconds; MIN 300.00
 \newcommand{\norm}[1]{\Vert {#1} \Vert}
 
 \paragraph{Task~a: Model.}
@@ -87,7 +87,7 @@ When $s$ increases, the optimal objective value decrease, because we have more s
 \paragraph{Task~d: 20 Zones.}
 The results are in Table~\ref{tab:res:mip}.
 %
-When~$s$ grows beyond~$4$, the optimal objective value \todo{\filler}.
+When~$s$ grows beyond~$4$, the optimal objective value is $0.011920$ for $s=5$.
 
 \paragraph{Task~e: 40 Zones.}
 The results are in Table~\ref{tab:res:mip}.
@@ -116,9 +116,9 @@ Our model does not time out. % \todo{times out, so our proposed algorithm for de
 The size of the search space of a totally brute-force search algorithm
 is 
 \begin{equation*}
-\binom{z}{s} = \frac{z!}{s! \cdot (z-s)!}  = z \cdot (z-1) \cdots (z-s+1),
+\binom{z}{s} = \frac{z!}{s! \cdot (z-s)!}  = \frac{z \cdot (z-1) \cdots (z-s+1)}{1 \cdot 2 \cdots s},
 \end{equation*}
-because if we want to position $s$ objects in $z$ places. The first object we position has $z$ places it can go to, the second one hase $z-1$ possibilities, and so on until the last one that $z - s + 1$ options. High school basic combinatorics therefore give us the result above.
+because if we want to position $s$ objects in $z$ places. The first object we position has $z$ places it can go to, the second one hase $z-1$ possibilities, and so on until the last one that $z - s + 1$ options. As the order in which we make position the station does not matter, we have to divide by the possibilities in which we can position the station. High school basic combinatorics therefore give us the result above.
 
 The numbers of candidate solutions this brute-force search algorithm
 has to examine per second in order to match the reported runtime
@@ -126,7 +126,7 @@ performance of~\SolverMIP on our model are given in the right-most
 column of Table~\ref{tab:res:mip}, for each instance that~\SolverMIP
 solved to proven optimality without timing out.
 %
-We think that \todo{\filler}, because \todo{\filler}.
+% We think that \todo{\filler}, because \todo{\filler}.
 
 \begin{table}[t]  % make it float to the top of a page
   \centering

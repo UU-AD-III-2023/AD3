@@ -3,21 +3,21 @@
 
 \todo{
   %% delete this paragraph, including its footnote:
-  The \emph{investment design problem} is about finding a matrix of
-  $v$~rows and $b$~columns of~$0$-$1$ integer values, such that each
-  row sums up to~$r$, with $v \geq 2$ and $b \geq r \geq 1$, and the
-  largest dot product between all pairs of rows is minimised.
-  % 
-  Equivalently, one has to find~$v$ subsets of size~$r$ within a given
-  set of $b$~elements, such that the largest intersection of any two
-  of the $v$~sets has minimal size.
-  % 
-  An instance of the problem is parametrised by a
-  triple~$\Tuple{v,b,r}$.\footnote{\todo{Your report need not contain
-      an explanation of the problem to be solved: you can assume the
-      reader has read the problem statement in the assignment
-      instructions.  We just repeat it here for self-sufficiency of
-      this document.}}
+%  The \emph{investment design problem} is about finding a matrix of
+%  $v$~rows and $b$~columns of~$0$-$1$ integer values, such that each
+%  row sums up to~$r$, with $v \geq 2$ and $b \geq r \geq 1$, and the
+%  largest dot product between all pairs of rows is minimised.
+%  % 
+%  Equivalently, one has to find~$v$ subsets of size~$r$ within a given
+%  set of $b$~elements, such that the largest intersection of any two
+%  of the $v$~sets has minimal size.
+%  % 
+%  An instance of the problem is parametrised by a
+%  triple~$\Tuple{v,b,r}$.\footnote{\todo{Your report need not contain
+%      an explanation of the problem to be solved: you can assume the
+%      reader has read th e problem statement in the assignment
+%      instructions.  We just repeat it here for self-sufficiency of
+%      this document.}}
   
   %% delete this paragraph:
 %  This is an abstract description of a problem that appears in
@@ -51,34 +51,42 @@
 \paragraph{Task~a: SLS Algorithm.}
 \begin{enumerate}
 \item Representation. 
-The current state of the local search is given by a $v$
+The current state of the local search is given by a $v \times b$ matrix, where each row $v$ is a binary array of length $b$ where there are always $r$ elements that are $1$. 
 %\todo{Describe how to represent the problem:
 %  what are the variables, their meanings, their constraints, and the
 %  objective function?}
 
   
-\item Initial Assignment.  \todo{Describe an algorithm for generating
-  (fast) a randomised initial assignment.}
-\item Move.  \todo{Describe one or more moves that go from an
-  assignment to a neighbouring assignment by changing the values of
-  a few variables.}
-\item Constraints.  \todo{Describe for each constraint how its
-  satisfaction is either algorithmically checkable efficiently or
-  guaranteed to be preserved by the previous two design choices.}
-\item Neighbourhood.  \todo{Describe a neighbourhood based on the
-  described moves.
-  % 
-  Derive a formula for computing the size of the neighbourhood in
-  terms of the problem parameters.
-  % 
-  Discuss whether the neighbourhood makes the search space connected,
-  in the sense that every feasible assignment (that is, every
-  assignment satisfying all the constraints, whether optimal or not)
-  is reachable from every initial assignment (you only need to sketch
-  a proof if the search space is connected, and give a counterexample
-  otherwise).}
-\item Cost Function.  \todo{Describe a cost function, whose value is
-  to be minimised during search.}
+\item Initial Assignment. It is made by randomly generating $v$ binary arrays where $r$ ones are randomly positioned. %\todo{Describe an algorithm for generating
+%  (fast) a randomised initial assignment.}
+\item Move. We randomly select one row, and check which one the fields with a one is the most expensive and which field with a zero is the cheapest. If they reduce the costs, then we make the switch, else we move to the next row. With a probability of $\alpha$ we instead make a random move, and with a probability $\beta$ we make a random restart. 
+%\todo{Describe one or more moves that go from an
+%  assignment to a neighbouring assignment by changing the values of
+%  a few variables.}
+\item Constraints. Each row must have exactly $r$ elements which are one, which is a built in constrain which is never violated, because we only make swaps in the moves and each row gets initialised this way. 
+%\todo{Describe for each constraint how its
+%  satisfaction is either algorithmically checkable efficiently or
+%  guaranteed to be preserved by the previous two design choices.}
+\item Neighbourhood. As for each of the $v$ rows, we create one possible move, there is a total of $v$ moves in the neighbourhood. The search space in connected, as each permutation of $r$ from $b$ elements can be found from a finite sequence of permutations and switches. As we can reach every feasible configuration for $1$ row, we can also reach every feasible configuration of the matrix. 
+%\todo{Describe a neighbourhood based on the
+%  described moves.
+%  % 
+%  Derive a formula for computing the size of the neighbourhood in
+%  terms of the problem parameters.  
+%  % 
+%  Discuss whether the neighbourhood makes the search space connected,
+%  in the sense that every feasible assignment (that is, every
+%  assignment satisfying all the constraints, whether optimal or not)
+%  is reachable from every initial assignment (you only need to sketch
+%  a proof if the search space is connected, and give a counterexample
+%  otherwise).}
+\item Cost Function. Let $v_i$ and $v_j$ be the $i$-th and $j$-th row of a configuration. Then our cost function is given by: 
+\begin{equation*}
+ \mathsf{cost} = \max_{i \neq j}\: v_i \cdot v_j 
+\end{equation*}
+
+%\todo{Describe a cost function, whose value is
+%  to be minimised during search.}
 \item Probing.  \todo{Describe how a neighbouring assignment, as
   reachable by a move, can be probed efficiently:
   % 
@@ -122,8 +130,8 @@ In summary, the local-search parameters (not the problem
 parameters~$v$,~$b$,~$r$) are~\todo{$\alpha$ and~$\beta$.}
 
 \paragraph{Task~b: Implementation.}
-We chose the high-performance programming language \todo{Java}, for
-which a \todo{compiler or interpreter} is available on the Linux
+We chose the high-performance programming language C++, for
+which a compiler is available on the Linux
 computers of the IT department.  All source code is \todo{uploaded}
 with this report.  The compilation and running instructions are
 \todo{\filler}.
@@ -216,11 +224,13 @@ The timeout was~$\TimeoutSLS$~CPU seconds per run.%
 We observe that \todo{\filler}, because \todo{\filler}.
 
 \paragraph{Task~d: Exact Algorithm.}
-An exact algorithm could work as follows: \todo{discuss its features
-  (for instance, does it perform brute-force search?).}
+An exact algorithm could work as follows: It could perform brute force search, trying out all possible non-equivalent configurations. Two configurations are equivalent, if a permutations of the rows leads to both configurations to be the same. This would lower the size of the search space. 
+%\todo{discuss its features
+%  (for instance, does it perform brute-force search?).}
 %
-The size of the search space of this exact algorithm is
-\todo{$\binom{r!}{\cos b} \cdot \log v$}, because \todo{\filler}.
+For one row, the search space is given by $\binom{v}{r}$. As we have a total of $b$ rows, there are in total $\binom{v}{r}^b$ possibilities. As the permutation of $b$ elements yield a group of size $b!$, the number of equivalent classes is $b!$. Hence, the total search space is of size 
+$$ \frac{\binom{v}{r}^{b}}{b!}$$
+ 
 
 The number of candidate solutions this exact algorithm has to examine
 per second in order to match the runtime performance of the seemingly
