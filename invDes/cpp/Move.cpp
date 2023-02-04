@@ -9,7 +9,12 @@
  *
  */
 Move::Move(){
-    this->cost=Cost();
+};
+
+Move::Move(int row, int oldIdx, int newIdx){
+    this->row=row;
+    this->oldIdx=oldIdx;
+    this->newIdx=newIdx;
 };
 
 Cost Move::getCost(){

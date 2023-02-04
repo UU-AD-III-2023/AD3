@@ -21,7 +21,9 @@ public:
     int newIdx;
 
     Cost cost;
+
     Move();
+    Move(int row, int oldIdx, int newIdx);
     Cost getCost();
     void setCost(Cost cost);
 };

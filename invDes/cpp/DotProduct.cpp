@@ -5,7 +5,7 @@ Matrix::Matrix(){};
 // j Column, on vector on nth Row
 void Matrix::dot_prod(vector<int> a, vector<int> b, int &out) {
 	int dotp = 0;
-	int n = a.size();
+	int n = int(a.size());
 
 	this->a_int=a;
 	// ATTENTION!

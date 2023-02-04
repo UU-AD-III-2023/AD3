@@ -14,6 +14,50 @@ Design::Design(int v, int b, int r) {
     /* ... */
 }
 
+int Design::getBestLb(){
+    int worst=0;
+    for (int i=0; i<v;i++){
+        int tmp = dotCost(i);
+        if (tmp>worst){
+            worst=tmp;
+        }
+    }
+    this->bestLambda=worst;
+    return bestLambda;
+}
+
+/**
+ * get the Cost of the board
+ * 
+ * @param row: Ignores this row for dot calculations
+ */
+int Design::dotCost(int row){
+    int worst=0;
+    for (int j =0; j<v;j++){
+        int val=0;
+        if (j!=row){
+            matrix.dot_prod(portfolio[row], portfolio[j],val);
+        }
+        if (val>worst){
+            worst = val;
+        }
+    }
+    return worst;
+}
+
+int Design::getCurrentLambda(){
+    int worst = 0;
+    for (int i=0; i < v; i++){
+        int tmp = dotCost(i);
+
+        if (tmp>worst){
+            worst=tmp;
+        }
+    }
+    this->bestLambda = worst;
+    return worst;
+}
+
 /**
  * Create a random initial assignment, setup incremental data structures for detminening which row
  * changes given a move, and setup the dotProduct object.
@@ -32,8 +76,8 @@ void Design::init() {
         std::shuffle(std::begin(row), std::end(row), rng);
 
         // Remember indexes for easy reference
-        vector<int> tsIdx(r,0);     //tmp selected indexes
-        vector<int> teIdx(b-r,0);   //tmp empty indexes
+        vector<int> tsIdx;//(r,0);     //tmp selected indexes
+        vector<int> teIdx;//(b-r,0);   //tmp empty indexes
         for (int j=0; j<b;j++){
             if (row[j]==1){
                 tsIdx.push_back(j);
@@ -46,15 +90,24 @@ void Design::init() {
         selections.push_back(tsIdx);
         blank.push_back(teIdx);
         portfolio.push_back(row);
+
+        // int bLb=this->getCurrentLambda();
+        // this->bestLambda=bLb;
     }
 }
 
-int Design::dotCost(int row){
+/**
+ * get the Cost of the board
+ * 
+ * @param row: Ignores this row for dot calculations
+ * @param temp: Modified Uncommited Move
+ */
+int Design::moveCost(vector<int> temp, int row){
     int worst=0;
     for (int j =0; j<v;j++){
         int val=0;
         if (j!=row){
-            matrix.dot_prod(portfolio[row], portfolio[j],val);
+            matrix.dot_prod(temp, portfolio[j],val);
         }
         if (val>worst){
             worst = val;
@@ -63,16 +116,23 @@ int Design::dotCost(int row){
     return worst;
 }
 
-// vector<Move> Design::getNeighbours(){
-//     for (int i=0; i<v; i++){
-//         for (int j=0; j<r; j++) {
-//             for (int k=0; k<(b-r); k++){
-//                 //PERMUTE ALL NEIGHBOURS
-
-//             }
-//         }
-//     }
-// }
+/**
+ * Create all possible Moves and place them in a list. 
+ * i row, j index in selected baskets list, k index in empty baskets list
+*/
+vector<Move> Design::makeMoves(){
+    vector<Move> possibleMoves;
+    for (int i=0; i<v; i++){
+        for (int j=0; j<r; j++) {
+            for (int k=0; k<(b-r); k++){
+                //PERMUTE ALL Moves
+                possibleMoves.push_back(Move(i,j,k));
+            }
+        }
+    }
+    std::cout<<int(possibleMoves.size()) << " POSSIBLE MOVES CREATED\n" ;
+    return possibleMoves;
+}
 
 /**
  * Probe a move. This does not update change any internal data structures (or: any changes are
@@ -83,23 +143,43 @@ int Design::dotCost(int row){
 Cost Design::probeMove(Move m) {
     /* ... */
     int row = m.row;
-    int old = m.oldIdx;
-    int newI = m.newIdx;
+    int oldIdx = selections[row][m.oldIdx];
+    int newIdx = blank[row][m.newIdx];
     
+    vector<int> tmp = portfolio[row];
 
     // Allocating an new object each probe is unnecessarily expensive.
     // This can be worked around by instead updating some static object.
     // However, for this assignment allocating here should be fine...
-    Cost cost = m.getCost();
+    Cost cost = Cost();
     if (cost.value < 0){
-        std::swap(portfolio[row][old],portfolio[row][newI]);
-        int worst=dotCost(row);
-
-        cost.value = worst;
+        int before = moveCost(tmp,row);
+        std::swap(tmp[oldIdx],tmp[newIdx]);
+        int after=moveCost(tmp,row);
+        cost.value = after;
+        cost.improvement = before-after;
         m.setCost(cost);
     }
 
     return cost;
+}
+
+/**
+ * Probe a move. This does not update change any internal data structures (or: any changes are
+ * undone before returning the cost)
+ *
+ * @param m
+ */
+vector<int> Design::getExpensiveRows() {
+    vector<int> expensive;
+
+    for (int i = 0; i<v;i++){
+        int cost = dotCost(i);
+        if (cost == this->bestLambda){
+            expensive.push_back(i);
+        }
+    }
+    return expensive;
 }
 
 /**
@@ -110,7 +190,19 @@ Cost Design::probeMove(Move m) {
  */
 void Design::commitMove(Move m) {
     /* ... */
-    m.getCost();
+    int row = m.row;
+    int oldIdx = selections[row][m.oldIdx];
+    int newIdx = blank[row][m.newIdx];
+
+    Cost cost = m.getCost();
+    // int costV = cost.value;
+
+    std::swap(portfolio[row][oldIdx],portfolio[row][newIdx]);
+    std::swap(selections[row][m.oldIdx],blank[row][m.newIdx]);
+
+    getBestLb();
+
+    cost.value = -1;
 }
 
 /**

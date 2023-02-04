@@ -19,10 +19,8 @@ private:
 int v;
 int b;
 int r;
+int bestLambda;
 vector<vector<int>> chkpt;
-
-vector<vector<int>> invNorm;
-vector<vector<int>> possibleNorm;
 
 vector<vector<int>> selections;
 vector<vector<int>> blank;
@@ -33,15 +31,21 @@ public:
 // baskets add investment
 vector<vector<int>> portfolio;
 
+int getCurrentLambda();
+int getBestLb();
 Design();
 Design(int v, int b, int r);
 void init();
-vector<Move> getNeighbours();
+vector<Move> makeMoves();
 Cost probeMove(Move m);
+
+vector<int> getExpensiveRows();
+
 void commitMove(Move m);
 void updateDotProductFromMove(Move m);
 void saveDesign();
 void restoreSavedDesign();
 string toString();
 int dotCost(int row);
+int moveCost(vector<int> temp, int row);
 };

@@ -2,6 +2,7 @@
 
 Cost::Cost() {
     this->value = -1;
+    this->improvement=0;
 }
 
 string Cost::toString() {
@@ -11,10 +12,10 @@ string Cost::toString() {
 
 bool Cost::isEqualTo(Cost c) {
     /* ... */
-    return this->value==c.value;
+    return improvement==c.improvement;
 }
 
 bool Cost::isBetterThan(Cost c) {
     /* ... */
-    return this->value<c.value;
+    return improvement>c.improvement;
 }

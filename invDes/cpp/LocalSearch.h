@@ -24,8 +24,10 @@ private:
   Design design;
   int v,b,r,lb;
   Tabu tabu;
-  int it;// bestLambda;
+  int it, bestLambda;
   int alpha, beta;
+
+  vector<Move> possibleMoves;
 
 public:
   LocalSearch();

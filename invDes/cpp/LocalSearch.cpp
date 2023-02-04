@@ -17,21 +17,6 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
 
 LocalSearch::LocalSearch(){}
 
-// def lb(r, v, b):
-//     a2 = (r*v) % b
-//     if a2 != 0:
-//         a1 = ((r*v) // b + 1)**2
-//     else:
-//         a1 = ((r*v) // b)**2
-//     a3 = ((r*v) // b)**2
-//     a4 = b - (r*v) % b
-//     up = a1*a2 + a3 *a4 - r*v
-//     down = v*(v-1)
-//     if up % down == 0:
-//         return up // down
-//     else:
-//         return up // down + 1
-
 int LocalSearch::calculateLb(){
   int rv = r*v;
 
@@ -41,20 +26,61 @@ int LocalSearch::calculateLb(){
 };
 
 void LocalSearch::run(){
+  std::cout << "\ninitialising...\n";
   design.init();
+  // std::cout << "nice";
+  this->possibleMoves = design.makeMoves();
+  this->bestLambda=design.getCurrentLambda();
 
+
+  while (bestLambda > lb) {
+    Move itMove = getFirstImprovingNeighbour();
+    if (itMove.row==-1){
+      std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
+      << "====================================================================\n";
+      break;
+    }
+    design.commitMove(itMove);
+    this->bestLambda=design.getBestLb();
+
+    std::cout << bestLambda << "\n";
+  }
   string output = getOutput();
-  std::cout << "\nlb: " << lb;
+  std::cout << "\nlb: " << lb << "\n";
+  std::cout << bestLambda;
   std::cout << output;
 
 };
 Move LocalSearch::getBestNeighbour(){
-  return Move();
+  // vector<int> expensive = design.getExpensiveRows();
+  Cost cost;
+  int bestReduction = 0;
+  int bestMoveIdx = -1;
+  for (int i=0; i< int(possibleMoves.size());i++){
+    cost = design.probeMove(possibleMoves[i]);
+    possibleMoves[i].setCost(cost);
+    if (cost.improvement > bestReduction) {
+      bestMoveIdx=i;
+      bestReduction = cost.improvement;
+    }
+  }
+  return possibleMoves[bestMoveIdx];
 };
 Move LocalSearch::getFirstImprovingNeighbour(){
-  return Move();
+  // vector<int> expensive = design.getExpensiveRows();
+  int bestReduction = 0;
+  for (int i=0; i< int(possibleMoves.size());i++){
+    Cost cost = design.probeMove(possibleMoves[i]);
+    possibleMoves[i].setCost(cost);
+    if (cost.improvement > bestReduction) {
+      return possibleMoves[i];
+    }
+  }
+  return Move(-1,-1,-1);
 };
 Move LocalSearch::getRandomNeighbour(){
+  //Random algo
+  //return possibleMoves[i];
   return Move();
 };
 string LocalSearch::getOutput(){
