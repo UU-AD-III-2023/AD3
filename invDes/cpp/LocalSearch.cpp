@@ -1,5 +1,7 @@
 #include "LocalSearch.h"
 #include <sstream>
+#include <random>
+#include <algorithm>
 
 using std::stringstream;
 
@@ -10,9 +12,10 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
   this->lb = calculateLb();
   this->design = Design(v, b, r);
   this->tabu = Tabu(0/* ... */, v, b, r);
-  this->it = 1;
+  this->it = 0;
   this->alpha = alpha;
   this->beta = beta;
+  this->tabu = Tabu(0,v,b,r);
 }
 
 LocalSearch::LocalSearch(){}
@@ -28,52 +31,71 @@ int LocalSearch::calculateLb(){
 void LocalSearch::run(){
   std::cout << "\ninitialising...\n";
   design.init();
-  // std::cout << "nice";
   this->possibleMoves = design.makeMoves();
   this->bestLambda=design.getCurrentLambda();
 
-
+  int repeat = v/2;
   while (bestLambda > lb) {
+    this->it++;
     Move itMove = getFirstImprovingNeighbour();
     if (itMove.row==-1){
-      std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
-      << "====================================================================\n";
-      break;
+      if (repeat) {
+        repeat--;
+        int randn=0;
+        for (int i=0;i<rand()%(10/3);i++){
+          randn = rand()%int(possibleMoves.size());
+        }
+        design.commitMove(possibleMoves[randn]);
+        std::cout<<"Tabu: "<<it;
+        tabu.makeTabu(possibleMoves[randn],it);
+        itMove = possibleMoves[randn];
+      } else {
+        std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
+        << "====================================================================\n";
+        break;
+      }
     }
     design.commitMove(itMove);
     this->bestLambda=design.getBestLb();
-
     std::cout << bestLambda << "\n";
   }
   string output = getOutput();
   std::cout << "\nlb: " << lb << "\n";
-  std::cout << bestLambda;
-  std::cout << output;
+  std::cout << bestLambda << "\x1b[32m";
+  std::cout << output << "\x1b[0m";
 
 };
 Move LocalSearch::getBestNeighbour(){
   // vector<int> expensive = design.getExpensiveRows();
   Cost cost;
-  int bestReduction = 0;
-  int bestMoveIdx = -1;
+  Cost bestCost = Cost();
+  int bestMoveIdx;
   for (int i=0; i< int(possibleMoves.size());i++){
     cost = design.probeMove(possibleMoves[i]);
     possibleMoves[i].setCost(cost);
-    if (cost.improvement > bestReduction) {
+    if (cost.isBetterThan(bestCost) && !tabu.isTabu(possibleMoves[i],it)) {
       bestMoveIdx=i;
-      bestReduction = cost.improvement;
+      bestCost = cost;
+      std::cout<<" improved: " << bestCost.improvement<< "\n";
     }
+  }
+  if (bestCost.improvement==0) {
+    return Move(-1,-1,-1);
   }
   return possibleMoves[bestMoveIdx];
 };
 Move LocalSearch::getFirstImprovingNeighbour(){
   // vector<int> expensive = design.getExpensiveRows();
-  int bestReduction = 0;
+  Cost bestCost = Cost();
   for (int i=0; i< int(possibleMoves.size());i++){
     Cost cost = design.probeMove(possibleMoves[i]);
     possibleMoves[i].setCost(cost);
-    if (cost.improvement > bestReduction) {
-      return possibleMoves[i];
+    if (cost.isBetterThan(bestCost)) {
+      if (!tabu.isTabu(possibleMoves[i],it)){
+        return possibleMoves[i];
+      } else {
+        return possibleMoves[i+1?i-1:i==0];
+      }
     }
   }
   return Move(-1,-1,-1);

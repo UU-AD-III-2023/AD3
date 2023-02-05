@@ -12,10 +12,10 @@ string Cost::toString() {
 
 bool Cost::isEqualTo(Cost c) {
     /* ... */
-    return improvement==c.improvement;
+    return improvement==c.improvement && value==c.value;
 }
 
 bool Cost::isBetterThan(Cost c) {
     /* ... */
-    return improvement>c.improvement;
+    return ((value>c.value && (improvement>c.improvement)) || (improvement>c.improvement));
 }

@@ -3,20 +3,21 @@ Tabu::Tabu(){};
 
 Tabu::Tabu(int tenure, int v, int b, int r){
     this->tenure = tenure;
-    this->v = v;
-    this->b = b;
-    this->r = r;
+    // this->Tmove = move;
+    this->numMoves = (v*r*(b-r))*v*b;
+    std::cout<<"NUMMOVESTABU: "<<numMoves<<"\n";
+    
 }
 
-bool Tabu::isTabu(int row, int column, int it){
-    if (row == column && column == it) {
+bool Tabu::isTabu(Move move, int it){
+    if ( (Tmove.row == move.row || Tmove.oldIdx==move.oldIdx) && tenure >= it) {
         return true;
     }
     return false;
 }
 
-void Tabu::makeTabu(int row, int column, int it){
-    this->r = row;
-    this->b = column;
-    this->v = it;
+void Tabu::makeTabu(Move move, int it){
+    this->Tmove = move;
+    int total = it + numMoves;
+    this->tenure = total;
 }

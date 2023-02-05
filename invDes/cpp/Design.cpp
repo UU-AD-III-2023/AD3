@@ -151,8 +151,9 @@ Cost Design::probeMove(Move m) {
     // Allocating an new object each probe is unnecessarily expensive.
     // This can be worked around by instead updating some static object.
     // However, for this assignment allocating here should be fine...
-    Cost cost = Cost();
-    if (cost.value < 0){
+    int before = moveCost(tmp,row);
+    Cost cost = m.getCost();
+    if (cost.value <= before){
         int before = moveCost(tmp,row);
         std::swap(tmp[oldIdx],tmp[newIdx]);
         int after=moveCost(tmp,row);
