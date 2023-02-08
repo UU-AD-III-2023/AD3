@@ -18,28 +18,70 @@ Consider the following formula in conjunctive normal form (CNF):
   (\neg x_2 \lor \neg x_6) \land
   (\neg x_4 \lor \neg x_6)
 \end{multline*}
-\todo{Perform ordered resolution
-  % (cf.\ \emph{Introduction to SAT}, slide~19)
-  on this formula, selecting the variables in the order given by their
-  index (i.e., $x_1$ before $x_2$ before~\dots).  Show the result
-  after each iteration.
-  % 
-  Based on your resolution, is~$\varphi$ satisfiable?
-}
+We apply resolution by selecting the variables in their own given order. In blue are the new clauses from the resolution.
+\begin{align*}
+\varphi \equiv & (x_1 \lor x_2) \land
+  	(x_3 \lor x_4) \land
+  	(x_5 \lor x_6) \land
+  	(\neg x_1 \lor \neg x_3) \land
+  	(\neg x_1 \lor \neg x_5) \\ & \land
+  	(\neg x_3 \lor \neg x_5) \land
+  	(\neg x_2 \lor \neg x_4) \land
+  	(\neg x_2 \lor \neg x_6) \land
+  	(\neg x_4 \lor \neg x_6) \\
+  \equiv & \todo{(x_2 \lor \neg x_3)} \land
+  	\todo{(x_2 \lor \neg x_5)} \land
+  	(x_3 \lor x_4) \land
+	(x_5 \lor x_6) \land
+	(\neg x_3 \lor \neg x_5) \\ & \land
+	(\neg x_2 \lor \neg x_4) \land
+  	(\neg x_2 \lor \neg x_6) \land
+  	(\neg x_4 \lor \neg x_6) \\
+  \equiv & \todo{(\neg x_3 \lor \neg x_4)} \land
+  	\todo{(\neg x_3 \lor \neg x_6)} \land
+	\todo{(\neg x_5 \lor \neg x_4)} \land
+	\todo{(\neg x_5 \lor \neg x_6)} \\ & \land
+	(x_3 \lor x_4) \land
+	(x_5 \lor x_6) \land
+	(\neg x_3 \lor \neg x_5) \land
+  	(\neg x_4 \lor \neg x_6) \\
+  \equiv & \todo{(x_4 \lor \neg x_6)} \land
+  	\todo{(x_4 \lor \neg x_5)} \land
+    \todo{(\neg x_4 \lor \neg x_5)} \land
+  	\todo{(\neg x_5 \lor \neg x_6)} \\ & \land
+  	(x_5 \lor x_6) \land
+    (\neg x_4 \lor \neg x_6) \\
+  \equiv & \todo{(\neg x_5 \lor \neg x_6)} \land
+    \todo{(\neg x_6)} \land
+    \todo{(\neg x_5)} \land
+    (x_5 \lor x_6) \\
+    \equiv & (\neg x_6) \land \todo{(x_6)} \\
+    \equiv & \todo{()}
+\end{align*}
+As we reach the empty clause, the formula is unsatisfiable. 
+
+%\todo{Perform ordered resolution
+%  % (cf.\ \emph{Introduction to SAT}, slide~19)
+%  on this formula, selecting the variables in the order given by their
+%  index (i.e., $x_1$ before $x_2$ before~\dots).  Show the result
+%  after each iteration.
+%  %
+%  Based on your resolution, is~$\varphi$ satisfiable?
+%}
 
 \paragraph{Task~b: DPLL.}
 Consider again the formula~$\varphi$ given in Task~a.
-% 
+%
 \todo{Explain in detail how the DPLL algorithm,
   % (cf.\ \emph{Introduction to SAT}, slide~26),
   when applied to~$\varphi$, determines whether the formula is
   satisfiable.
-  % 
+  %
   Assume that the variables are selected in the order given by their
   index (i.e., $x_1$ before $x_2$ before~\dots), and that they are
   assigned~$1$ (i.e., True) before they are assigned~$0$ (i.e.,
   False).
-  % 
+  %
   Remember to perform unit propagation and to apply the pure-literal
   rule where possible, in order to prune parts of the search space.
 }
@@ -56,10 +98,10 @@ Consider the following CNF formula:
 \]
 Assume that~$x_7$ has been assigned~$0$ at decision level~$2$, and
 that~$x_8$ has been assigned~$0$ at decision level~$3$.
-% 
+%
 Moreover, assume that the current decision assignment is $x_1 = 0$ at
 decision level~$5$.
-% 
+%
 \todo{Draw a resulting implication graph.
   % (cf.\ \emph{Mini-tutorial on conflict-driven clause learning
   % solvers}, slide~4).
