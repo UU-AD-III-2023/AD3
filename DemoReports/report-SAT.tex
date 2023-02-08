@@ -1,9 +1,13 @@
 % !TEX root = demoReport.tex
+\newcommand{\p}{\varphi}
 \section*{Problem 3: Boolean Satisfiability (SAT)}
 
 \newcommand{\MiniSat}{Mini\-Sat}  % avoids default hyphenation into Min-iSat
 \newcommand{\SolverSAT}{\todo{\MiniSat}\xspace}  % or Lingeling, or ...
 \newcommand{\TimeoutSAT}{\todo{60.0}}  % timeout, in CPU seconds; MIN 60.0
+\newcommand{\green}[1]{{\color{green}#1}}
+\newcommand{\gray}[1]{{\color{gray}#1}}
+
 
 \paragraph{Task~a: Ordered Resolution.}
 Consider the following formula in conjunctive normal form (CNF):
@@ -58,7 +62,7 @@ We apply resolution by selecting the variables in their own given order. In blue
     \equiv & (\neg x_6) \land \todo{(x_6)} \\
     \equiv & \todo{()}
 \end{align*}
-As we reach the empty clause, the formula is unsatisfiable. 
+As we reach the empty clause, the formula is unsatisfiable.
 
 %\todo{Perform ordered resolution
 %  % (cf.\ \emph{Introduction to SAT}, slide~19)
@@ -72,19 +76,124 @@ As we reach the empty clause, the formula is unsatisfiable.
 \paragraph{Task~b: DPLL.}
 Consider again the formula~$\varphi$ given in Task~a.
 %
-\todo{Explain in detail how the DPLL algorithm,
-  % (cf.\ \emph{Introduction to SAT}, slide~26),
-  when applied to~$\varphi$, determines whether the formula is
-  satisfiable.
-  %
-  Assume that the variables are selected in the order given by their
-  index (i.e., $x_1$ before $x_2$ before~\dots), and that they are
-  assigned~$1$ (i.e., True) before they are assigned~$0$ (i.e.,
-  False).
-  %
-  Remember to perform unit propagation and to apply the pure-literal
-  rule where possible, in order to prune parts of the search space.
-}
+On the initial formula $\varphi$ we have no unit clause and no pure literal, so we select the variable $x_1$ and run $\textsf{DPLL}(\varphi \land x_1)$: \\
+The formula we now apply \textsf{DPLL} is now:
+\begin{align*}
+\p_1 \equiv \p \land x_1 \equiv & (x_1 \lor x_2) \land
+  (x_3 \lor x_4) \land
+  (x_5 \lor x_6) \land
+  (\neg x_1 \lor \neg x_3) \land
+  (\neg x_1 \lor \neg x_5) \\ & \land
+  (\neg x_3 \lor \neg x_5) \land
+  (\neg x_2 \lor \neg x_4) \land
+  (\neg x_2 \lor \neg x_6) \land
+  (\neg x_4 \lor \neg x_6) \land (x_1)
+\end{align*}
+We have a unit clause now and make unit propagation with $x_1$
+\begin{align*}
+\p_2 \equiv &
+  (x_3 \lor x_4) \land
+  (x_5 \lor x_6) \land
+  (\neg x_3) \land
+  (\neg x_5) \\ & \land
+  (\neg x_3 \lor \neg x_5) \land
+  (\neg x_2 \lor \neg x_4) \land
+  (\neg x_2 \lor \neg x_6) \land
+  (\neg x_4 \lor \neg x_6)
+\end{align*}
+We have new unit clauses: First we apply the unit propagation on $\neg x_3$ and get:
+\begin{align*}
+ \p_3 \equiv &
+   (x_5 \lor x_6) \land
+   (\neg x_5) \\ & \land
+   (\neg x_2) \land
+   (\neg x_2 \lor \neg x_6) \land
+   (\neg x_4 \lor \neg x_6)
+\end{align*}
+We apply unit propagation on $x_4$ and get:
+\begin{align*}
+ \p_4 \equiv &
+   (x_5 \lor x_6) \land
+   (\neg x_5) \\ & \land
+   (\neg x_2) \land
+   (\neg x_2 \lor \neg x_6) \land
+   (\neg x_6)
+\end{align*}
+We apply unit propagation $\neg x_5$ and get:
+\begin{align*}
+ \p_5 \equiv &
+   (x_6) \land
+   (\neg x_2) \\ & \land
+   (\neg x_2 \lor \neg x_6) \land
+   (\neg x_6)
+\end{align*}
+We apply unit propagation to $x_6$ and get:
+\begin{align*}
+ \p_6 \equiv &
+   (\neg x_2) \land
+   (\neg x_2) \land
+   ()
+\end{align*}
+and get an empty clause. We make backtracking and run $\mathsf{DPLL}(\p \land \neg x_1)$. We make unit propagation with $\neg x_1$:
+\begin{align*}
+\p_7 \equiv \p \land \neg x_1 \equiv & (x_2) \land
+  (x_3 \lor x_4) \land
+  (x_5 \lor x_6) \land
+  (\neg x_3 \lor \neg x_5) \\ & \land
+  (\neg x_2 \lor \neg x_4) \land
+  (\neg x_2 \lor \neg x_6) \land
+  (\neg x_4 \lor \neg x_6)
+\end{align*}
+We make unit propagation with $x_2$ and get:
+\begin{align*}
+\p_8 \equiv &
+  (x_3 \lor x_4) \land
+  (x_5 \lor x_6) \land
+  (\neg x_3 \lor \neg x_5) \\ & \land
+  (\neg x_4) \land
+  (\neg x_6) \land
+  (\neg x_4 \lor \neg x_6)
+\end{align*}
+We make unit propagation with $\neg x_4$ and get:
+\begin{align*}
+\p_9 \equiv &
+  (x_3) \land
+  (x_5 \lor x_6) \\ & \land
+  (\neg x_3 \lor \neg x_5)  \land
+  (\neg x_6)
+\end{align*}
+We we make unit propagation with $x_3$ and get:
+\begin{align*}
+\p_{10} \equiv &
+  (x_5 \lor x_6) \land
+  (\neg x_5)  \land
+  (\neg x_6)
+\end{align*}
+We make unit propagation with $\neg x_5$ and get:
+\begin{align*}
+\p_{11} \equiv &
+  (x_6) \land
+  (\neg x_6)
+\end{align*}
+We make unti propagation with $x_6$ and get:
+\begin{align*}
+  \p_{12} \equiv ()
+\end{align*}
+Hence we get $\p = \mathsf{UNSAT}$.
+
+%\todo{Explain in detail how the DPLL algorithm,
+%  % (cf.\ \emph{Introduction to SAT}, slide~26),
+%  when applied to~$\varphi$, determines whether the formula is
+%  satisfiable.
+%  %
+%  Assume that the variables are selected in the order given by their
+%  index (i.e., $x_1$ before $x_2$ before~\dots), and that they are
+%  assigned~$1$ (i.e., True) before they are assigned~$0$ (i.e.,
+%  False).
+%  %
+%  Remember to perform unit propagation and to apply the pure-literal
+%  rule where possible, in order to prune parts of the search space.
+%}
 
 \paragraph{Task~c: CDCL.}
 Consider the following CNF formula:
@@ -102,12 +211,40 @@ that~$x_8$ has been assigned~$0$ at decision level~$3$.
 Moreover, assume that the current decision assignment is $x_1 = 0$ at
 decision level~$5$.
 %
-\todo{Draw a resulting implication graph.
-  % (cf.\ \emph{Mini-tutorial on conflict-driven clause learning
-  % solvers}, slide~4).
-  Does the graph contain any conflicts?  If so, then mark these
-  clearly, and provide a conflict clause.
-}
+\begin{center}
+\begin{tikzpicture}
+  \node (2) [state] {$2$};
+  \node (1) [above = of 2] {$\vdots$};
+  \node (a2) [left = of 2] {$x_7 \mapsto 0$};
+  \node (3) [state, below = of 2] {$3$};
+  \node (a3) [left = of 3] {$x_8 \mapsto 0$};
+  \node (4) [below = of 3] {$\vdots$};
+  \node (5) [state, below = of 4] {$5$};
+  \node (a5) [left = of 5] {$x_1 \mapsto 0$};
+  \path [-stealth, thick]
+  		(2) edge node {} (3)
+		(3) edge node {} (4)
+		(4) edge node {} (5);
+\end{tikzpicture}
+\end{center}
+Using \green{green} text for trustified literals and \gray{gray} for gray for false ones we get the formula:
+\begin{align*}
+  (\gray{x_1} \lor \gray{x_8} \lor \neg x_2) \land
+  (\gray{x_1} \lor \neg x_3) \land
+  (x_2 \lor x_3 \lor x_4) \land
+  (\neg x_4 \lor \neg x_5) \land
+  (\gray{x_7} \lor \neg x_4 \lor \neg x_6) \land
+  (x_5 \lor x_6)
+\end{align*}
+
+
+%\todo{Draw a resulting implication graph.
+%  % (cf.\ \emph{Mini-tutorial on conflict-driven clause learning
+%  % solvers}, slide~4).
+%  Does the graph contain any conflicts?  If so, then mark these
+%  clearly, and provide a conflict clause.
+%}
+
 
 \paragraph{Task~d: Encoding.}~ \todo{Describe your encoding, citing
   either~\cite{AMK:CNF:Sinz}, or~\cite[Section~2.2.2]{CNFencodings},
