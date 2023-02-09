@@ -17,5 +17,5 @@ bool Cost::isEqualTo(Cost c) {
 
 bool Cost::isBetterThan(Cost c) {
     /* ... */
-    return ((value>c.value && (improvement>c.improvement)) || (improvement>c.improvement));
+    return ((!(value<c.value) && (improvement>c.improvement)));
 }

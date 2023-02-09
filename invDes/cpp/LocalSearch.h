@@ -33,6 +33,7 @@ public:
   LocalSearch();
   LocalSearch(int v, int b, int r, int alpha, int beta);
   int calculateLb();
+  void randInit();
   void run();
   Move getBestNeighbour();
   Move getFirstImprovingNeighbour();

@@ -15,14 +15,15 @@ Design::Design(int v, int b, int r) {
 }
 
 int Design::getBestLb(){
-    int worst=0;
-    for (int i=0; i<v;i++){
-        int tmp = dotCost(i);
-        if (tmp>worst){
-            worst=tmp;
-        }
-    }
-    this->bestLambda=worst;
+    // int worst=0;
+    // for (int i=0; i<v;i++){
+    //     int tmp = dotCost(i);
+    //     if (tmp>worst){
+    //         worst=tmp;
+    //     }
+    // }
+    // int lb = worst;
+    // this->bestLambda=worst;
     return bestLambda;
 }
 
@@ -54,7 +55,7 @@ int Design::getCurrentLambda(){
             worst=tmp;
         }
     }
-    this->bestLambda = worst;
+    // this->bestLambda = worst;
     return worst;
 }
 
@@ -64,6 +65,10 @@ int Design::getCurrentLambda(){
  */
 void Design::init() {
     /* ... */
+    selections={};
+    blank={};
+    portfolio={};
+
     for (int i=0; i<v;i++){
         vector<int> row(b,0);
 
@@ -90,9 +95,6 @@ void Design::init() {
         selections.push_back(tsIdx);
         blank.push_back(teIdx);
         portfolio.push_back(row);
-
-        // int bLb=this->getCurrentLambda();
-        // this->bestLambda=bLb;
     }
 }
 
@@ -201,7 +203,7 @@ void Design::commitMove(Move m) {
     std::swap(portfolio[row][oldIdx],portfolio[row][newIdx]);
     std::swap(selections[row][m.oldIdx],blank[row][m.newIdx]);
 
-    getBestLb();
+    getCurrentLambda();
 
     cost.value = -1;
 }
@@ -225,7 +227,18 @@ void Design::updateDotProductFromMove(Move m) {
  */
 void Design::saveDesign() {
 /* ... */
-    chkpt = portfolio;
+    int currLb = getCurrentLambda();
+    if (currLb < getBestLb()){
+        for (int i=0; i<int(portfolio.size()); i++){
+            for (int j=0; j<b;j++){
+                std::cout<<"YES";
+                chkpt[i][j]=portfolio[i][j];
+            }
+        }
+        // this->chkpt = portfolio;
+        this->bestLambda=currLb;
+    }
+    // chkpt = portfolio;
 }
 
 /**
@@ -234,6 +247,14 @@ void Design::saveDesign() {
  */
 void Design::restoreSavedDesign() {
 /* ... */
+    int currLb = getCurrentLambda();
+    if (!(currLb <= getBestLb())){
+        for (int i=0; i<int(chkpt.size()); i++){
+            for (int j=0; j<b;j++){
+                portfolio[i][j]=chkpt[i][j];
+            }
+        }
+    }
 }
 
 /**

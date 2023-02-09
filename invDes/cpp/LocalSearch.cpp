@@ -5,6 +5,9 @@
 
 using std::stringstream;
 
+auto rd = std::random_device {}; 
+auto rng = std::default_random_engine { rd() };
+
 LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
   this->v = v;
   this->b = b;
@@ -28,37 +31,48 @@ int LocalSearch::calculateLb(){
   return ceil(top/bot);
 };
 
-void LocalSearch::run(){
-  std::cout << "\ninitialising...\n";
+void LocalSearch::randInit(){
   design.init();
   this->possibleMoves = design.makeMoves();
   this->bestLambda=design.getCurrentLambda();
+}
 
-  int repeat = v/2;
+void LocalSearch::run(){
+  std::cout << "\ninitialising...\n";
+  randInit();
+  // int alph = v/2;
+  std::uniform_int_distribution<int> rgen(1,v);
   while (bestLambda > lb) {
     this->it++;
     Move itMove = getFirstImprovingNeighbour();
     if (itMove.row==-1){
-      if (repeat) {
-        repeat--;
-        int randn=0;
-        for (int i=0;i<rand()%(10/3);i++){
-          randn = rand()%int(possibleMoves.size());
-        }
-        design.commitMove(possibleMoves[randn]);
-        std::cout<<"Tabu: "<<it;
-        tabu.makeTabu(possibleMoves[randn],it);
-        itMove = possibleMoves[randn];
+      if (alpha) {
+        alpha--;
+        design.saveDesign();
+
+        randInit();
+
+        // int randn=0;
+        // for (int i=0;i<rand()%(10/3);i++){
+        //   randn = rand()%int(possibleMoves.size());
+        // }
+        // design.commitMove(possibleMoves[randn]);
+        // std::cout<<"Tabu: "<<it;
+        // tabu.makeTabu(possibleMoves[randn],it);
+        // itMove = possibleMoves[randn];
       } else {
         std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
         << "====================================================================\n";
         break;
       }
     }
-    design.commitMove(itMove);
-    this->bestLambda=design.getBestLb();
+    if (itMove.row!=-1){
+      design.commitMove(itMove);
+    }
+    this->bestLambda=design.getCurrentLambda();
     std::cout << bestLambda << "\n";
   }
+  design.restoreSavedDesign();
   string output = getOutput();
   std::cout << "\nlb: " << lb << "\n";
   std::cout << bestLambda << "\x1b[32m";
