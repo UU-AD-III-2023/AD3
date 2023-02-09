@@ -19,7 +19,7 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta, bool printMod
   this->it = 0;
   this->alpha = alpha;
   this->beta = beta;
-  this->tabu = Tabu(beta);
+  this->tabu = Tabu(alpha);
   this->printMode = printMode;
 }
 
@@ -46,7 +46,7 @@ int LocalSearch::run(){
   randInit();
   // int alph = v/2;
   clock_t start = std::clock();
-  int thisIter = alpha;
+  int thisIter = beta;
 
   while (bestLambda > lb && ((clock() - start) < CLOCKS_PER_SEC*300)) {
     this->it++;
