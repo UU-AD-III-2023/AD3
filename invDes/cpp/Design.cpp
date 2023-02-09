@@ -11,6 +11,7 @@ Design::Design(int v, int b, int r) {
     this->v = v;
     this->b = b;
     this->r = r;
+    this->bestLambda=-1;
     /* ... */
 }
 
@@ -228,16 +229,21 @@ void Design::updateDotProductFromMove(Move m) {
 void Design::saveDesign() {
 /* ... */
     int currLb = getCurrentLambda();
-    if (currLb < getBestLb()){
+    // std::cout<<currLb<< " vs " <<bestLambda<<" ";
+    chkpt = {};
+    std::cout<<toString(true);
+    if (currLb < getBestLb() || bestLambda==-1){
         for (int i=0; i<int(portfolio.size()); i++){
-            for (int j=0; j<b;j++){
-                // std::cout<<"YES";
-                chkpt[i][j]=portfolio[i][j];
+            vector<int> portrow = {};
+            for (int j=0;j< b;j++){
+                portrow.push_back(portfolio[i][j]);
             }
+            chkpt.push_back(portrow);
         }
         // this->chkpt = portfolio;
         this->bestLambda=currLb;
     }
+    // std::cout<<toString(true);
     // chkpt = portfolio;
 }
 
@@ -248,6 +254,7 @@ void Design::saveDesign() {
 void Design::restoreSavedDesign() {
 /* ... */
     int currLb = getCurrentLambda();
+    // std::cout<<"Restore" << currLb<< " vs " <<bestLambda<<" ";
     if (!(currLb <= getBestLb())){
         for (int i=0; i<int(chkpt.size()); i++){
             for (int j=0; j<b;j++){

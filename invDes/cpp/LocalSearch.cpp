@@ -58,7 +58,7 @@ int LocalSearch::run(){
         thisIter--;
         design.saveDesign();
         int movesMade = int(moveHistory.size());
-        std::cout<<" Best: " << design.getCurrentLambda() << " | ";
+        // std::cout<<" Best: " << design.getCurrentLambda() << " | ";
         for (int mm=0; mm<movesMade ;mm++){
           Move toTabu=moveHistory[int(moveHistory.size())-1];
           tabu.makeTabu(toTabu, it);
@@ -110,7 +110,8 @@ Move LocalSearch::getFirstImprovingNeighbour(){
   for (int i=0; i< int(possibleMoves.size());i++){
     Cost cost = design.probeMove(possibleMoves[i]);
     possibleMoves[i].setCost(cost);
-    if (cost.isBetterThan(bestCost)) {
+    if (cost.isBetterThan(bestCost) || cost.isEqualTo(bestCost)) {
+      bestCost = cost;
       if (!tabu.isTabu(possibleMoves[i],it)){
         return possibleMoves[i];
       }

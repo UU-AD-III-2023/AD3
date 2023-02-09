@@ -24,7 +24,7 @@ class InvDes {
         void main(int argc, char * argv[]) {
             // Paramters for tuning local search algorithm, does not have to be int.
             int alpha = 800;
-            int beta = 60;
+            int beta = 80;
             bool printMode = false;
 
             int v=0;
