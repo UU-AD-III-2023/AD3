@@ -16,11 +16,10 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta, bool printMod
   this->r = r;
   this->lb = calculateLb();
   this->design = Design(v, b, r);
-  this->tabu = Tabu(0/* ... */, v, b, r);
   this->it = 0;
   this->alpha = alpha;
   this->beta = beta;
-  this->tabu = Tabu(0,v,b,r);
+  this->tabu = Tabu(alpha);
   this->printMode = printMode;
 }
 

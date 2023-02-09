@@ -5,18 +5,22 @@
 #include "Move.h"
 #endif
 
+#include <vector>
+
+using std::vector;
+
 class Tabu {
     private:
     int tenure;
-    int numMoves;
-    Move Tmove;
+    vector<Move> Tmove;
+    vector<int> TabooTens;
     // int v;
     // int b;
     // int r;
 
     public:
     Tabu();
-    Tabu(int tenure,int v, int b, int r);
+    Tabu(int tenure);
     bool isTabu(Move move, int it);
     void makeTabu(Move move, int it);
     // Tabu(int tenure, int v, int b, int r);
