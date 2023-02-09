@@ -1,22 +1,22 @@
 #pragma once
 
+#include <vector>
 #include <iostream>
 #ifndef MOVE
 #include "Move.h"
 #endif
 
+using std::vector;
+
 class Tabu {
     private:
     int tenure;
-    int numMoves;
-    Move Tmove;
-    // int v;
-    // int b;
-    // int r;
+    vector<Move> tabooMoves;
+    vector<int> tenures;
 
     public:
     Tabu();
-    Tabu(int tenure,int v, int b, int r);
+    Tabu(int tenure);
     bool isTabu(Move move, int it);
     void makeTabu(Move move, int it);
     // Tabu(int tenure, int v, int b, int r);

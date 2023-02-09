@@ -1,21 +1,32 @@
 #include "Tabu.h"
 Tabu::Tabu(){};
 
-Tabu::Tabu(int tenure, int v, int b, int r){
+Tabu::Tabu(int tenure){
     this->tenure = tenure;
-    // this->Tmove = move;
-    this->numMoves = (v*r*(b-r))*v*b;    
+    this->tabooMoves={};
+    this->tenures={};
 }
 
 bool Tabu::isTabu(Move move, int it){
-    if ( (Tmove.row == move.row || Tmove.oldIdx==move.oldIdx) && tenure >= it) {
-        return true;
-    }
-    return false;
+    // for (int i=(int(tabooMoves.size())); i>=0; i--) {
+    //     Move checkMove = tabooMoves[i];
+    //     if (tenures[i] < it) {
+    //         for (int j=0; j<=i;j++){
+    //             tenures.erase(tenures.begin());
+    //         }
+    //         i = -1;
+    //     }
+    //     else if (checkMove.row==move.row && checkMove.newIdx==move.newIdx && checkMove.oldIdx==move.oldIdx){
+    //         return true;
+    //     }
+    // }
+
+    this->tabooMoves.push_back(move);
+    return (it > 0);
 }
 
 void Tabu::makeTabu(Move move, int it){
-    this->Tmove = move;
-    int total = it + numMoves;
-    this->tenure = total;
+    int total = it + tenure;
+    this->tabooMoves.push_back(move);
+    this->tenures.push_back(total);
 }

@@ -16,11 +16,10 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta, bool printMod
   this->r = r;
   this->lb = calculateLb();
   this->design = Design(v, b, r);
-  this->tabu = Tabu(0/* ... */, v, b, r);
   this->it = 0;
   this->alpha = alpha;
   this->beta = beta;
-  this->tabu = Tabu(0,v,b,r);
+  this->tabu = Tabu(alpha);
   this->printMode = printMode;
 }
 
@@ -49,7 +48,9 @@ int LocalSearch::run(){
   clock_t start = std::clock();
   int thisIter = alpha;
 
-  while (bestLambda > lb && ((clock() - start) < CLOCKS_PER_SEC*300)) {
+  std::uniform_int_distribution<> rdmMove(0, (int(possibleMoves.size())-1));
+
+  while (bestLambda > lb && ((clock() - start) < CLOCKS_PER_SEC*298)) {
     this->it++;
     Move itMove = getFirstImprovingNeighbour();
     if (itMove.row==-1){
@@ -62,13 +63,19 @@ int LocalSearch::run(){
         // tabu.makeTabu(possibleMoves[randn],it);
         // itMove = possibleMoves[randn];
       } else {
-        // std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
-        // << "====================================================================\n";
         break;
       }
     }
+    if (it%alpha==0){
+      itMove = possibleMoves[rdmMove(rng)];
+    }
+    // else {
+    //   tabu.makeTabu(itMove, it);
+    // }
     if (itMove.row!=-1){
-      design.commitMove(itMove);
+      // if (tabu.isTabu(itMove, it)) {
+      design.commitMove(itMove);        
+      // }
     }
     this->bestLambda=design.getCurrentLambda();
     // std::cout << bestLambda << "\n";
