@@ -19,7 +19,7 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta, bool printMod
   this->it = 0;
   this->alpha = alpha;
   this->beta = beta;
-  this->tabu = Tabu(alpha);
+  this->tabu = Tabu(beta);
   this->printMode = printMode;
 }
 
@@ -56,10 +56,6 @@ int LocalSearch::run(){
         thisIter--;
         design.saveDesign();
         randInit();
-
-        // std::cout<<"Tabu: "<<it;
-        // tabu.makeTabu(possibleMoves[randn],it);
-        // itMove = possibleMoves[randn];
       } else {
         // std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
         // << "====================================================================\n";
@@ -67,10 +63,10 @@ int LocalSearch::run(){
       }
     }
     if (itMove.row!=-1){
+      tabu.makeTabu(itMove, it);
       design.commitMove(itMove);
     }
     this->bestLambda=design.getCurrentLambda();
-    // std::cout << bestLambda << "\n";
   }
   design.restoreSavedDesign();
   string output = getOutput();
@@ -107,8 +103,6 @@ Move LocalSearch::getFirstImprovingNeighbour(){
     if (cost.isBetterThan(bestCost)) {
       if (!tabu.isTabu(possibleMoves[i],it)){
         return possibleMoves[i];
-      } else {
-        return possibleMoves[i+1?i-1:i==0];
       }
     }
   }
