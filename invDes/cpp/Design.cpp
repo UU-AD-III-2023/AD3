@@ -83,16 +83,12 @@ void Design::init() {
         // Remember indexes for easy reference
         vector<int> tsIdx;//(r,0);     //tmp selected indexes
         vector<int> teIdx;//(b-r,0);   //tmp empty indexes
-        vector<int> originSIdx;//(r,0);     //tmp selected indexes
-        vector<int> originEIdx;//(b-r,0);   //tmp empty indexes
         for (int j=0; j<b;j++){
             if (row[j]==1){
                 tsIdx.push_back(j);
-                originSIdx.push_back(j);
             }
             else {
                 teIdx.push_back(j);
-                originEIdx.push_back(j);
             }
         }
 
@@ -276,7 +272,7 @@ string Design::toString(bool printMode) {
         }
     }
     stringstream output;
-    output << "\nCost of Portfolio: " << worst << "";
+    output << "\nCost of Portfolio: " << worst << "\n";
         
     if (printMode){
         for (int i=0;i<v;i++){
@@ -287,7 +283,7 @@ string Design::toString(bool printMode) {
                 }
                 output << *it;
             }
-            output << "";
+            output << "\n";
         }
     }
     

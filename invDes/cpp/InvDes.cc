@@ -23,8 +23,8 @@ class InvDes {
         InvDes(){};
         void main(int argc, char * argv[]) {
             // Paramters for tuning local search algorithm, does not have to be int.
-            int alpha = 30;
-            int beta = 40;
+            int alpha = 800;
+            int beta = 60;
             bool printMode = false;
 
             int v=0;
@@ -64,8 +64,9 @@ class InvDes {
                 }
                 for (auto & instance : instances) {
                     clock_t start = clock();
+                    unsigned long totalTime = ((clock() - start)*1.0/CLOCKS_PER_SEC);
                     runSolver(instance[0], instance[1], instance[2], alpha, beta, printMode);
-                    std::cout << "\x1b[33m" << "TOTAL TIME TAKEN: " << ((clock() - start)*1.0/CLOCKS_PER_SEC) << "seconds\x1b[0m";
+                    std::cout << "\x1b[33m" << "TOTAL TIME TAKEN: " << totalTime << "seconds\x1b[0m";
                 }
             }
         }

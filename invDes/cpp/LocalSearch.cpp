@@ -58,9 +58,8 @@ int LocalSearch::run(){
         thisIter--;
         design.saveDesign();
         int movesMade = int(moveHistory.size());
-        std::cout<<"Starting: ";
+        std::cout<<" Best: " << design.getCurrentLambda() << " | ";
         for (int mm=0; mm<movesMade ;mm++){
-          std::cout<<mm<<" ";
           Move toTabu=moveHistory[int(moveHistory.size())-1];
           tabu.makeTabu(toTabu, it);
           moveHistory.pop_back();
