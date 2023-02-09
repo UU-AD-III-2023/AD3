@@ -4,9 +4,7 @@ Tabu::Tabu(){};
 Tabu::Tabu(int tenure, int v, int b, int r){
     this->tenure = tenure;
     // this->Tmove = move;
-    this->numMoves = (v*r*(b-r))*v*b;
-    std::cout<<"NUMMOVESTABU: "<<numMoves<<"\n";
-    
+    this->numMoves = (v*r*(b-r))*v*b;    
 }
 
 bool Tabu::isTabu(Move move, int it){

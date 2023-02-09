@@ -2,13 +2,15 @@
 #include <sstream>
 #include <random>
 #include <algorithm>
+#include <ctime>
 
 using std::stringstream;
+using std::clock_t;
 
 auto rd = std::random_device {}; 
 auto rng = std::default_random_engine { rd() };
 
-LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
+LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta, bool printMode) {
   this->v = v;
   this->b = b;
   this->r = r;
@@ -19,6 +21,7 @@ LocalSearch::LocalSearch(int v, int b, int r, int alpha, int beta) {
   this->alpha = alpha;
   this->beta = beta;
   this->tabu = Tabu(0,v,b,r);
+  this->printMode = printMode;
 }
 
 LocalSearch::LocalSearch(){}
@@ -28,6 +31,8 @@ int LocalSearch::calculateLb(){
 
   int top = std::pow(ceil((rv)/b),2)*(rv%b)+pow(floor(rv/b),2)*(b-(rv%b))-rv;
   int bot = (v*(v-1));
+
+  std::cout  << "\x1b[33m" << " ideal-lb: " << ceil(top/bot) << "\x1b[0m";
   return ceil(top/bot);
 };
 
@@ -37,32 +42,28 @@ void LocalSearch::randInit(){
   this->bestLambda=design.getCurrentLambda();
 }
 
-void LocalSearch::run(){
-  std::cout << "\ninitialising...\n";
+int LocalSearch::run(){
+  std::cout << "\ninitialising...";
   randInit();
   // int alph = v/2;
-  std::uniform_int_distribution<int> rgen(1,v);
-  while (bestLambda > lb) {
+  clock_t start = std::clock();
+  int thisIter = alpha;
+
+  while (bestLambda > lb && ((clock() - start) < CLOCKS_PER_SEC*300)) {
     this->it++;
     Move itMove = getFirstImprovingNeighbour();
     if (itMove.row==-1){
-      if (alpha) {
-        alpha--;
+      if (thisIter) {
+        thisIter--;
         design.saveDesign();
-
         randInit();
 
-        // int randn=0;
-        // for (int i=0;i<rand()%(10/3);i++){
-        //   randn = rand()%int(possibleMoves.size());
-        // }
-        // design.commitMove(possibleMoves[randn]);
         // std::cout<<"Tabu: "<<it;
         // tabu.makeTabu(possibleMoves[randn],it);
         // itMove = possibleMoves[randn];
       } else {
-        std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
-        << "====================================================================\n";
+        // std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
+        // << "====================================================================\n";
         break;
       }
     }
@@ -70,14 +71,14 @@ void LocalSearch::run(){
       design.commitMove(itMove);
     }
     this->bestLambda=design.getCurrentLambda();
-    std::cout << bestLambda << "\n";
+    // std::cout << bestLambda << "\n";
   }
   design.restoreSavedDesign();
   string output = getOutput();
-  std::cout << "\nlb: " << lb << "\n";
-  std::cout << bestLambda << "\x1b[32m";
-  std::cout << output << "\x1b[0m";
-
+  // std::cout << "currentBest: " << bestLambda ;
+  // long totalsecs = (clock() - start)/CLOCKS_PER_SEC;
+  std::cout << "\x1b[32m" << output << " TIMING: " << ((clock() - start)*1.0/CLOCKS_PER_SEC) << " seconds\x1b[0m";
+  return bestLambda;
 };
 Move LocalSearch::getBestNeighbour(){
   // vector<int> expensive = design.getExpensiveRows();
@@ -90,7 +91,7 @@ Move LocalSearch::getBestNeighbour(){
     if (cost.isBetterThan(bestCost) && !tabu.isTabu(possibleMoves[i],it)) {
       bestMoveIdx=i;
       bestCost = cost;
-      std::cout<<" improved: " << bestCost.improvement<< "\n";
+      // std::cout<<" improved: " << bestCost.improvement<< "\n";
     }
   }
   if (bestCost.improvement==0) {
@@ -115,10 +116,11 @@ Move LocalSearch::getFirstImprovingNeighbour(){
   return Move(-1,-1,-1);
 };
 Move LocalSearch::getRandomNeighbour(){
-  //Random algo
-  //return possibleMoves[i];
-  return Move();
+  Move out;
+  std::uniform_int_distribution<int> rgen(1,int(possibleMoves.size()));
+  out = possibleMoves[rgen(rng)];
+  return out;
 };
 string LocalSearch::getOutput(){
-  return design.toString();
+  return design.toString(printMode);
 };

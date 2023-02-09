@@ -45,7 +45,7 @@ void commitMove(Move m);
 void updateDotProductFromMove(Move m);
 void saveDesign();
 void restoreSavedDesign();
-string toString();
+string toString(bool printMode);
 int dotCost(int row);
 int moveCost(vector<int> temp, int row);
 };

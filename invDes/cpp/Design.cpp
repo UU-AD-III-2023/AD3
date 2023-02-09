@@ -132,7 +132,7 @@ vector<Move> Design::makeMoves(){
             }
         }
     }
-    std::cout<<int(possibleMoves.size()) << " POSSIBLE MOVES CREATED\n" ;
+    // std::cout<<int(possibleMoves.size()) << " POSSIBLE MOVES CREATED\n" ;
     return possibleMoves;
 }
 
@@ -231,7 +231,7 @@ void Design::saveDesign() {
     if (currLb < getBestLb()){
         for (int i=0; i<int(portfolio.size()); i++){
             for (int j=0; j<b;j++){
-                std::cout<<"YES";
+                // std::cout<<"YES";
                 chkpt[i][j]=portfolio[i][j];
             }
         }
@@ -261,8 +261,9 @@ void Design::restoreSavedDesign() {
  *
  * @return the current design in the format required by the assignment.
  */
-string Design::toString() {
+string Design::toString(bool printMode) {
     int worst = 0;
+    
     for (int i=0; i < v; i++){
         int tmp = dotCost(i);
 
@@ -271,17 +272,19 @@ string Design::toString() {
         }
     }
     stringstream output;
-    output << "\nCost of Portfolio: " << worst << "\n";
-    
-    for (int i=0;i<v;i++){
-        vector<int> vec = portfolio[i];
-        for(auto it =vec.begin();it!=vec.end();it++){ 
-            if(it != vec.begin()){
-                output <<" ";
+    output << "\nCost of Portfolio: " << worst << "";
+        
+    if (printMode){
+        for (int i=0;i<v;i++){
+            vector<int> vec = portfolio[i];
+            for(auto it =vec.begin();it!=vec.end();it++){ 
+                if(it != vec.begin()){
+                    output <<" ";
+                }
+                output << *it;
             }
-            output << *it;
+            output << "";
         }
-        output << "\n";
     }
     
     string out = output.str();

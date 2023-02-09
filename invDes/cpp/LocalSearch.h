@@ -27,14 +27,16 @@ private:
   int it, bestLambda;
   int alpha, beta;
 
+  bool printMode;
+
   vector<Move> possibleMoves;
 
 public:
   LocalSearch();
-  LocalSearch(int v, int b, int r, int alpha, int beta);
+  LocalSearch(int v, int b, int r, int alpha, int beta, bool printMode);
   int calculateLb();
   void randInit();
-  void run();
+  int run();
   Move getBestNeighbour();
   Move getFirstImprovingNeighbour();
   Move getRandomNeighbour();
