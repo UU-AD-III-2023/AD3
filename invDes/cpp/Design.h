@@ -20,16 +20,18 @@ int v;
 int b;
 int r;
 int bestLambda;
-vector<vector<int>> chkpt;
 
-vector<vector<int>> selections;
-vector<vector<int>> blank;
+// vector<vector<int>> oriSel;
+// vector<vector<int>> oriBlank;
 
 Matrix matrix;
 
 public:
 // baskets add investment
 vector<vector<int>> portfolio;
+vector<vector<int>> chkpt;
+vector<vector<int>> selections;
+vector<vector<int>> blank;
 
 int getCurrentLambda();
 int getBestLb();

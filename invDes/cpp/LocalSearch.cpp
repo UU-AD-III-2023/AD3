@@ -42,11 +42,13 @@ void LocalSearch::randInit(){
 }
 
 int LocalSearch::run(){
+  tabu=Tabu(alpha);
   std::cout << "\ninitialising...";
   randInit();
   // int alph = v/2;
   clock_t start = std::clock();
   int thisIter = beta;
+  vector<Move> moveHistory;
 
   while (bestLambda > lb && ((clock() - start) < CLOCKS_PER_SEC*300)) {
     this->it++;
@@ -55,16 +57,25 @@ int LocalSearch::run(){
       if (thisIter) {
         thisIter--;
         design.saveDesign();
-        randInit();
+        int movesMade = int(moveHistory.size());
+        std::cout<<"Starting: ";
+        for (int mm=0; mm<movesMade ;mm++){
+          std::cout<<mm<<" ";
+          Move toTabu=moveHistory[int(moveHistory.size())-1];
+          tabu.makeTabu(toTabu, it);
+          moveHistory.pop_back();
+          design.commitMove(toTabu);
+        }
       } else {
+        // tabu.makeTabu(itMove, it);
         // std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 
         // << "====================================================================\n";
         break;
       }
     }
     if (itMove.row!=-1){
-      tabu.makeTabu(itMove, it);
       design.commitMove(itMove);
+      moveHistory.push_back(itMove);
     }
     this->bestLambda=design.getCurrentLambda();
   }

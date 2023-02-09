@@ -31,6 +31,11 @@ private:
 
   vector<Move> possibleMoves;
 
+  vector<vector<int>> origin;
+  vector<vector<int>> originS;
+  vector<vector<int>> originB;
+  
+
 public:
   LocalSearch();
   LocalSearch(int v, int b, int r, int alpha, int beta, bool printMode);
