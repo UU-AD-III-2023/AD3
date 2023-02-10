@@ -58,13 +58,14 @@ int LocalSearch::run(){
         thisIter--;
         design.saveDesign();
         int movesMade = int(moveHistory.size());
-        // std::cout<<" Best: " << design.getCurrentLambda() << " | ";
+        // std::cout<<" MM: " << movesMade << " | ";
         for (int mm=0; mm<movesMade ;mm++){
           Move toTabu=moveHistory[int(moveHistory.size())-1];
+          design.commitMove(toTabu);
           tabu.makeTabu(toTabu, it);
           moveHistory.pop_back();
-          design.commitMove(toTabu);
         }
+        // std::cout<<design.toString(true);
       } else {
         // tabu.makeTabu(itMove, it);
         // std::cout<<"NO MORE FIRST IMPROVING, breaking loop...\n" 

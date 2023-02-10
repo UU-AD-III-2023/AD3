@@ -200,10 +200,10 @@ void Design::commitMove(Move m) {
 
     Cost cost = m.getCost();
     // int costV = cost.value;
-
+    // std::cout<<"premove"<<toString(true);
     std::swap(portfolio[row][oldIdx],portfolio[row][newIdx]);
     std::swap(selections[row][m.oldIdx],blank[row][m.newIdx]);
-
+    // std::cout<<"postmove"<<toString(true);
     getCurrentLambda();
 
     cost.value = -1;
@@ -231,7 +231,7 @@ void Design::saveDesign() {
     int currLb = getCurrentLambda();
     // std::cout<<currLb<< " vs " <<bestLambda<<" ";
     chkpt = {};
-    std::cout<<toString(true);
+    // std::cout<< "SAVED!!!" << toString(true);
     if (currLb < getBestLb() || bestLambda==-1){
         for (int i=0; i<int(portfolio.size()); i++){
             vector<int> portrow = {};
