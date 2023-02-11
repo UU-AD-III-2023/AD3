@@ -155,17 +155,17 @@ Cost Design::probeMove(Move m) {
     // This can be worked around by instead updating some static object.
     // However, for this assignment allocating here should be fine...
     int before = moveCost(tmp,row);
-    Cost cost = m.getCost();
-    if (cost.value <= before){
+    Cost mcost = m.getCost();
+    if (mcost.value <= before){
         int before = moveCost(tmp,row);
         std::swap(tmp[oldIdx],tmp[newIdx]);
         int after=moveCost(tmp,row);
-        cost.value = after;
+        mcost.value = after;
         cost.improvement = before-after;
         m.setCost(cost);
     }
 
-    return cost;
+    return mcost;
 }
 
 /**
