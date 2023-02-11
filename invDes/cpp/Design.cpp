@@ -207,6 +207,7 @@ void Design::commitMove(Move m) {
     getCurrentLambda();
 
     mcost.value = -1;
+    m.setCost(mcost);
 }
 
 /**
