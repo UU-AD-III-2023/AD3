@@ -161,8 +161,8 @@ Cost Design::probeMove(Move m) {
         std::swap(tmp[oldIdx],tmp[newIdx]);
         int after=moveCost(tmp,row);
         mcost.value = after;
-        cost.improvement = before-after;
-        m.setCost(cost);
+        mcost.improvement = before-after;
+        m.setCost(mcost);
     }
 
     return mcost;
@@ -178,8 +178,8 @@ vector<int> Design::getExpensiveRows() {
     vector<int> expensive;
 
     for (int i = 0; i<v;i++){
-        int cost = dotCost(i);
-        if (cost == this->bestLambda){
+        int ecost = dotCost(i);
+        if (ecost == this->bestLambda){
             expensive.push_back(i);
         }
     }
@@ -198,7 +198,7 @@ void Design::commitMove(Move m) {
     int oldIdx = selections[row][m.oldIdx];
     int newIdx = blank[row][m.newIdx];
 
-    Cost cost = m.getCost();
+    Cost mcost = m.getCost();
     // int costV = cost.value;
     // std::cout<<"premove"<<toString(true);
     std::swap(portfolio[row][oldIdx],portfolio[row][newIdx]);
@@ -206,7 +206,7 @@ void Design::commitMove(Move m) {
     // std::cout<<"postmove"<<toString(true);
     getCurrentLambda();
 
-    cost.value = -1;
+    mcost.value = -1;
 }
 
 /**
