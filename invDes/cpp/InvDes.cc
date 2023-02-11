@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <ctime>
+#include <algorithm>
 
 #include "LocalSearch.h"
 
@@ -23,8 +24,8 @@ class InvDes {
         InvDes(){};
         void main(int argc, char * argv[]) {
             // Paramters for tuning local search algorithm, does not have to be int.
-            int alpha = 5;
-            int beta = 80;
+            int alpha = 2;
+            int beta = 5;
             bool printMode = false;
 
             int v=0;
@@ -53,7 +54,7 @@ class InvDes {
                 }
                 clock_t start = clock();
                 runSolver(v, b, r, alpha, beta, printMode);
-                std::cout << "\x1b[33m" << "TOTAL TIME TAKEN: " << ((clock() - start)*1.0/CLOCKS_PER_SEC) << "seconds\n\x1b[0m";
+                std::cout << "\x1b[33m" << "TOTAL TIME TAKEN: " << (double)((clock() - start)/CLOCKS_PER_SEC) << " seconds\n\x1b[0m";
 
             } else {
                 // This is just an example of how to run all instances, you probably want to do
@@ -90,17 +91,18 @@ class InvDes {
             medianss << "Median Result: " << findMedian(storage, 5);
             std::cout << "\n\x1b[33m" << medianss.str() <<"\x1b[0m\n\nNEXT!\n";
         }
-        double findMedian(vector<int> a, int n){
+
+        int findMedian(vector<int> a, int n){
             // First we sort the array
-            double varr[100];
+            int varr[5];
             std::copy(a.begin(), a.end(), varr);
             std::sort(varr, varr + n);
         
             // Check for even case
             if (n % 2 != 0)
-                return (double)a[n / 2];
+                return (int)varr[n / 2];
         
-            return (double)(a[(n - 1) / 2] + a[n / 2]) / 2.0;
+            return (int)(varr[(n - 1) / 2] + varr[n / 2]) / 2;
         }
         
 
