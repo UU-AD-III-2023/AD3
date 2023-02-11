@@ -90,37 +90,50 @@ class InvDes {
             medianss << "Median Result: " << findMedian(storage, 5);
             std::cout << "\n\x1b[33m" << medianss.str() <<"\x1b[0m\n\nNEXT!\n";
         }
-
-        // Function for calculating
-        // the median from geeks for geeks
         double findMedian(vector<int> a, int n){
-            // If size of the arr[] is even
-            if (n % 2 == 0) {
-                // Applying nth_element
-                // on n/2th index
-                nth_element(a.begin(), a.begin() + n / 2, a.end());
+            // First we sort the array
+            double varr[100];
+            std::copy(a.begin(), a.end(), varr);
+            std::sort(varr, varr + n);
         
-                // Applying nth_element
-                // on (n-1)/2 th index
-                nth_element(a.begin(), a.begin() + (n - 1) / 2, a.end());
-        
-                // Find the average of value at
-                // index N/2 and (N-1)/2
-                return (double)(a[(n - 1) / 2] + a[n / 2]) / 2.0;
-            }
-        
-            // If size of the arr[] is odd
-            else {
-        
-                // Applying nth_element
-                // on n/2
-                nth_element(a.begin(), a.begin() + n / 2, a.end());
-        
-                // Value at index (N/2)th
-                // is the median
+            // Check for even case
+            if (n % 2 != 0)
                 return (double)a[n / 2];
-            }
+        
+            return (double)(a[(n - 1) / 2] + a[n / 2]) / 2.0;
         }
+        
+
+        // // Function for calculating
+        // // the median from geeks for geeks
+        // double findMedian(vector<int> a, int n){
+        //     // If size of the arr[] is even
+        //     if (n % 2 == 0) {
+        //         // Applying nth_element
+        //         // on n/2th index
+        //         nth_element(a.begin(), a.begin() + n / 2, a.end());
+        
+        //         // Applying nth_element
+        //         // on (n-1)/2 th index
+        //         nth_element(a.begin(), a.begin() + (n - 1) / 2, a.end());
+        
+        //         // Find the average of value at
+        //         // index N/2 and (N-1)/2
+        //         return (double)(a[(n - 1) / 2] + a[n / 2]) / 2.0;
+        //     }
+        
+        //     // If size of the arr[] is odd
+        //     else {
+        
+        //         // Applying nth_element
+        //         // on n/2
+        //         nth_element(a.begin(), a.begin() + n / 2, a.end());
+        
+        //         // Value at index (N/2)th
+        //         // is the median
+        //         return (double)a[n / 2];
+        //     }
+        // }
         
 };
 
