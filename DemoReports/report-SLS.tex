@@ -92,7 +92,7 @@ The current state of the local search is given by a $v \times b$ matrix, where e
 %\todo{
 % Describe how a neighbouring assignment, as
 %  reachable by a move, can be probed efficiently:
-We iterate through the rows, look at the $r$ elements that have a value $1$ and determine, which one is the most expensive one. We look at the $r-v$ elements that have the value $0$ and see, which one is the cheapest one. The maximum change in the \textsf{cost} is $1$. If we find an swap where we reduce the cost by $1$ we make the move. If the cost difference is $0$ or $-1$, we do not make the move.  
+We calculate the dot product of the row selected for swap, swap the elements we want to probe, and we get the largest product as output. This number is compared with the cost of the configuration before the swap, and should the cost decrease by 1 we have an improvement, If the cost increases, it means we are increasing the row cost, increasing the total cost by $+1$, or $0$ implying no improvement. 
   % 
 %  describe how the cost function can be evaluated efficiently and
 %  incrementally, and describe the data structures used to do so.
