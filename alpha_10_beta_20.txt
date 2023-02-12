@@ -1,0 +1,422 @@
+lohe0529@gullviva:~/AD3$ ./Ass2-1/InvDes
+#
+Solving instance v: 10 b: 30 r: 9. With parameters alpha: 10 beta: 20 ideal-lb: 2
+initialising...
+Cost of Portfolio: 3
+TIMING: 5.57237 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 8.47674 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 6.05031 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 5.23816 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 3.24442 seconds
+Median Result: 3
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 12 b: 44 r: 11. With parameters alpha: 10 beta: 20 ideal-lb: 2
+initialising...
+Cost of Portfolio: 3
+TIMING: 17.3467 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 19.0666 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 25.7974 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 12.8123 seconds
+initialising...
+Cost of Portfolio: 4
+TIMING: 20.9646 seconds
+Median Result: 3
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 15 b: 21 r: 7. With parameters alpha: 10 beta: 20 ideal-lb: 2
+initialising...
+Cost of Portfolio: 3
+TIMING: 8.39603 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 5.00902 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 4.76236 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 4.47831 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 3.30191 seconds
+Median Result: 3
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 16 b: 16 r: 6. With parameters alpha: 10 beta: 20 ideal-lb: 2
+initialising...
+Cost of Portfolio: 3
+TIMING: 3.65897 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 2.53064 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 2.8215 seconds
+initialising...
+Cost of Portfolio: 4
+TIMING: 300.003 seconds
+initialising...
+Cost of Portfolio: 3
+TIMING: 2.4037 seconds
+Median Result: 3
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 9 b: 36 r: 12. With parameters alpha: 10 beta: 20 ideal-lb: 3
+initialising...
+Cost of Portfolio: 4
+TIMING: 4.85809 seconds
+initialising...
+Cost of Portfolio: 4
+TIMING: 5.43957 seconds
+initialising...
+Cost of Portfolio: 4
+TIMING: 6.34383 seconds
+initialising...
+Cost of Portfolio: 8
+TIMING: 300.009 seconds
+initialising...
+Cost of Portfolio: 4
+TIMING: 5.58273 seconds
+Median Result: 4
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 11 b: 22 r: 10. With parameters alpha: 10 beta: 20 ideal-lb: 4
+initialising...
+Cost of Portfolio: 5
+TIMING: 2.57302 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 3.30429 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 3.47781 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 3.29564 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 2.35199 seconds
+Median Result: 5
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 19 b: 19 r: 9. With parameters alpha: 10 beta: 20 ideal-lb: 4
+initialising...
+Cost of Portfolio: 8
+TIMING: 300.01 seconds
+initialising...
+Cost of Portfolio: 8
+TIMING: 300.002 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 11.3032 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 8.26318 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 8.35656 seconds
+Median Result: 5
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 10 b: 37 r: 14. With parameters alpha: 10 beta: 20 ideal-lb: 2
+initialising...
+Cost of Portfolio: 5
+TIMING: 15.2535 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 12.1984 seconds
+initialising...
+Cost of Portfolio: 7
+TIMING: 300.006 seconds
+initialising...
+Cost of Portfolio: 5
+TIMING: 13.1183 seconds
+initialising...
+Cost of Portfolio: 6
+TIMING: 13.0897 seconds
+Median Result: 5
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 8 b: 28 r: 14. With parameters alpha: 10 beta: 20 ideal-lb: 6
+initialising...
+Cost of Portfolio: 7
+TIMING: 2.4544 seconds
+initialising...
+Cost of Portfolio: 7
+TIMING: 1.58899 seconds
+initialising...
+Cost of Portfolio: 7
+TIMING: 2.14 seconds
+initialising...
+Cost of Portfolio: 7
+TIMING: 4.33903 seconds
+initialising...
+Cost of Portfolio: 7
+TIMING: 3.95866 seconds
+Median Result: 7
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 10 b: 100 r: 30. With parameters alpha: 10 beta: 20 ideal-lb: 6
+initialising...
+Cost of Portfolio: 9
+TIMING: 135.318 seconds
+initialising...
+Cost of Portfolio: 11
+TIMING: 300.14 seconds
+initialising...
+Cost of Portfolio: 9
+TIMING: 111.467 seconds
+initialising...
+Cost of Portfolio: 9
+TIMING: 164.045 seconds
+initialising...
+Cost of Portfolio: 9
+TIMING: 127.986 seconds
+Median Result: 9
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 6 b: 50 r: 25. With parameters alpha: 10 beta: 20 ideal-lb: 10
+initialising...
+Cost of Portfolio: 12
+TIMING: 300.016 seconds
+initialising...
+Cost of Portfolio: 11
+TIMING: 5.58704 seconds
+initialising...
+Cost of Portfolio: 11
+TIMING: 3.56451 seconds
+initialising...
+Cost of Portfolio: 11
+TIMING: 5.71047 seconds
+initialising...
+Cost of Portfolio: 15
+TIMING: 300.008 seconds
+Median Result: 11
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 6 b: 60 r: 30. With parameters alpha: 10 beta: 20 ideal-lb: 12
+initialising...
+Cost of Portfolio: 14
+TIMING: 11.7715 seconds
+initialising...
+Cost of Portfolio: 16
+TIMING: 300.027 seconds
+initialising...
+Cost of Portfolio: 14
+TIMING: 11.1698 seconds
+initialising...
+Cost of Portfolio: 14
+TIMING: 11.9072 seconds
+initialising...
+Cost of Portfolio: 14
+TIMING: 9.37695 seconds
+Median Result: 14
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 11 b: 150 r: 50. With parameters alpha: 10 beta: 20 ideal-lb: 7
+initialising...
+Cost of Portfolio: 17
+TIMING: 301.779 seconds
+initialising...
+Cost of Portfolio: 16
+TIMING: 300.378 seconds
+initialising...
+Cost of Portfolio: 18
+TIMING: 301.39 seconds
+initialising...
+Cost of Portfolio: 20
+TIMING: 300.382 seconds
+initialising...
+Cost of Portfolio: 17
+TIMING: 302.066 seconds
+Median Result: 17
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 9 b: 70 r: 35. With parameters alpha: 10 beta: 20 ideal-lb: 11
+initialising...
+Cost of Portfolio: 19
+TIMING: 300.044 seconds
+initialising...
+Cost of Portfolio: 17
+TIMING: 23.4982 seconds
+initialising...
+Cost of Portfolio: 21
+TIMING: 300.014 seconds
+initialising...
+Cost of Portfolio: 17
+TIMING: 67.529 seconds
+initialising...
+Cost of Portfolio: 17
+TIMING: 48.4401 seconds
+Median Result: 17
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 10 b: 350 r: 100. With parameters alpha: 10 beta: 20 ideal-lb: 4
+initialising...
+Cost of Portfolio: 35
+TIMING: 306.342 seconds
+initialising...
+Cost of Portfolio: 30
+TIMING: 306.97 seconds
+initialising...
+Cost of Portfolio: 30
+TIMING: 315.95 seconds
+initialising...
+Cost of Portfolio: 30
+TIMING: 308.636 seconds
+initialising...
+Cost of Portfolio: 30
+TIMING: 305.659 seconds
+Median Result: 35
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 13 b: 250 r: 80. With parameters alpha: 10 beta: 20 ideal-lb: 18
+initialising...
+Cost of Portfolio: 26
+TIMING: 302.566 seconds
+initialising...
+Cost of Portfolio: 32
+TIMING: 300.495 seconds
+initialising...
+Cost of Portfolio: 30
+TIMING: 302.948 seconds
+initialising...
+Cost of Portfolio: 28
+TIMING: 304.212 seconds
+initialising...
+Cost of Portfolio: 27
+TIMING: 302.292 seconds
+Median Result: 30
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 10 b: 325 r: 100. With parameters alpha: 10 beta: 20 ideal-lb: 21
+initialising...
+Cost of Portfolio: 32
+TIMING: 302.946 seconds
+initialising...
+Cost of Portfolio: 32
+TIMING: 316.763 seconds
+initialising...
+Cost of Portfolio: 32
+TIMING: 304.426 seconds
+initialising...
+Cost of Portfolio: 31
+TIMING: 300.174 seconds
+initialising...
+Cost of Portfolio: 31
+TIMING: 301.28 seconds
+Median Result: 32
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 15 b: 350 r: 100. With parameters alpha: 10 beta: 20 ideal-lb: 19
+initialising...
+Cost of Portfolio: 36
+TIMING: 301.867 seconds
+initialising...
+Cost of Portfolio: 38
+TIMING: 310.637 seconds
+initialising...
+Cost of Portfolio: 36
+TIMING: 314.106 seconds
+initialising...
+Cost of Portfolio: 36
+TIMING: 302.149 seconds
+initialising...
+Cost of Portfolio: 37
+TIMING: 324.312 seconds
+Median Result: 36
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 9 b: 300 r: 100. With parameters alpha: 10 beta: 20 ideal-lb: 25
+initialising...
+Cost of Portfolio: 35
+TIMING: 300.333 seconds
+initialising...
+Cost of Portfolio: 40
+TIMING: 301.262 seconds
+initialising...
+Cost of Portfolio: 37
+TIMING: 306.121 seconds
+initialising...
+Cost of Portfolio: 33
+TIMING: 303.722 seconds
+initialising...
+Cost of Portfolio: 33
+TIMING: 306.566 seconds
+Median Result: 36
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 12 b: 200 r: 75. With parameters alpha: 10 beta: 20 ideal-lb: 17
+initialising...
+Cost of Portfolio: 28
+TIMING: 304.197 seconds
+initialising...
+Cost of Portfolio: 28
+TIMING: 302.464 seconds
+initialising...
+Cost of Portfolio: 28
+TIMING: 301.097 seconds
+initialising...
+Cost of Portfolio: 32
+TIMING: 300.911 seconds
+initialising...
+Cost of Portfolio: 28
+TIMING: 302.041 seconds
+Median Result: 29
+#
+NEXT!
+TOTAL TIME TAKEN: 0seconds
+Solving instance v: 10 b: 360 r: 120. With parameters alpha: 10 beta: 20 ideal-lb: 22
+initialising...
+Cost of Portfolio: 46
+TIMING: 314.087 seconds
+initialising...
+Cost of Portfolio: 49
+TIMING: 306.795 seconds
+initialising...
+Cost of Portfolio: 42
+TIMING: 304.671 seconds
+initialising...
+Cost of Portfolio: 41
+TIMING: 305.656 seconds
+initialising...
+Cost of Portfolio: 48
+TIMING: 303.841 seconds
+Median Result: 46
+#
+NEXT!
+TOTAL TIME TAKEN: 0secondslohe0529@gullviva:~/AD3$

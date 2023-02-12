@@ -162,11 +162,12 @@ to run the executable on the pre-input based on the java skeleton code provided.
 %parameters~$v$,~$b$,~$r$ as command-line arguments and writes to
 %standard output a line with the space-separated values
 %of~$v$,~$b$,~$r$, the lower bound~$\text{lb}(\lambda)$ on~$\lambda$,
-%and the achieved~$\lambda$, followed by one line per row of
+%and the achieved~$\lambda$, 
+The executable writes to the standard output a line  followed by one line per row of the time of a run as well as the cost. If the argument $p$ is written before the parameter $v$, $b$ and $r$, then a space separated matrix representing the solution is also printed. 
 %a~$v \times b$ matrix representing the solution, the~$0$-$1$ cell
 %values being space-separated.
 
-Our solution is not complete, and we are aware, that this will lead to point deduction. 
+%Our solution is not complete, and we are aware, that this will lead to point deduction. 
 % We validated the correctness of our implementation by \todo{checking
 %  its outputs on many instances via the provided polynomial-time
 %  solution checker}.
@@ -175,20 +176,12 @@ Our solution is not complete, and we are aware, that this will lead to point ded
 %% Note the non-breaking spaces, typeset via ~, between numbers and
 %% their units:
 We did not run any experiments, as our code is not completed. 
-%All experiments were run under
-% specification of the ThinLinc machines of the IT department, or
-% replace by a similar-looking specification of your own hardware:
-%\todo{Linux Ubuntu~18.04 ($64$~bit) on an Intel Xeon E5520 of
-%  $2.27$~GHz, with $4$~processors of $4$~cores each, with a $70$~GB
-%  RAM and an~$8$~MB L3 cache (a ThinLinc computer of the IT
-%  department).}
+All experiments were run under the the \textit{gullviva.it.uu.se} server from the IT department, with Ubuntu 22.04 x86\_64 architecture. 
 
-%We fine-tuned the local-search parameters as follows.  \todo{Discuss
-%  the impact of the local-search parameters~$\alpha$ and~$\beta$ on
-%  the performance of your SLS algorithm.}
+We fine-tuned the local-search parameters as follows. We ran the executable a few times with certain inputs, where each set of parameters $\alpha$ and $\beta$ and took the configuration, where it timed out the least. 
 %
-%\newcommand{\TimeoutSLS}{\todo{300.0}}  % timeout, in CPU seconds; MIN 300.0
-%\newcommand{\RunsSLS}{\todo{5}}         % independent runs per instance; MIN 5
+\newcommand{\TimeoutSLS}{\todo{300.0}}  % timeout, in CPU seconds; MIN 300.0
+\newcommand{\RunsSLS}{\todo{5}}         % independent runs per instance; MIN 5
 %
 %The \todo{median} runtime (in seconds), \todo{median} number of steps,
 %and \todo{median} achieved~$\lambda$ over~$\RunsSLS$ independent runs
@@ -211,34 +204,34 @@ We did not run any experiments, as our code is not completed.
 \begin{table}[t]  % make it float to the top of a page
   \centering
   \begin{tabular}{rrrrrrrrrrr}  % right alignment --> decimal point alignment
-    $v$ & $b$ & $r$ & $\text{lb}(\lambda)$ exact \\
+    & & &
+    & \multicolumn{3}{c}{\todo{$\Tuple{\alpha,\beta}=\Tuple{2,5}$}}
+    & \multicolumn{3}{c}{\todo{$\Tuple{\alpha,\beta}=\Tuple{10,20}$}} \\
+    \cmidrule(r){5-7} \cmidrule(r){8-10}
+    $v$ & $b$ & $r$ & $\text{lb}(\lambda)$
+        & time & steps & $\lambda$
+        & time & steps & $\lambda$ & exact \\
     \midrule
     \input{results-SLS.tex} %% let your experiment script write directly
                             %% into this file, making sure every number
                             %% in a column has the _same_ number of decimals
   \end{tabular}
-  \caption{
-%  Investment design: median runtime (in seconds), median
-%    number of steps, and median achieved~$\lambda$, for \todo{two}
-%    configurations
-%    %% remember: AT LEAST TWO, except for solo teams!
-%    of values for the local-search parameters~\todo{$\alpha$
-%      and~$\beta$}, over~$\RunsSLS$~independent runs per instance,
-%    with a timeout of $\TimeoutSLS$~CPU seconds per run.
-%    %
-    The right-most column gives the number of candidate solutions the
-    outlined exact algorithm has to examine in total. 
-%    in order
-%    to match the runtime performance of the seemingly best
-%    configuration of values for the local-search parameters, namely
-%    \todo{$\Tuple{\alpha,\beta}=\Tuple{20,8}$}, if the instance
-%    was solved to proven optimality, and `n/a' for `non-applicable'
-%    otherwise.
-    %% delete the following sentence:
-%    \todo{(The sample performance of this demo report is made up!)}
+  \caption{Investment design: median runtime (in seconds), median
+    number of steps, and median achieved~$\lambda$, for \todo{two}
+    configurations
+    %% remember: AT LEAST TWO, except for solo teams!
+    of values for the local-search parameters~\todo{$\alpha$
+      and~$\beta$}, over~$\RunsSLS$~independent runs per instance,
+    with a timeout of $\TimeoutSLS$~CPU seconds per run.
     %
-  }
-  \label{tab:res:sls}
+    The right-most column gives the number of candidate solutions the
+    outlined exact algorithm has to examine per second in order
+    to match the runtime performance of the seemingly best
+    configuration of values for the local-search parameters, namely
+    \todo{$\Tuple{\alpha,\beta}=\Tuple{2,5}$}, if the instance
+    was solved to proven optimality, and `n/a' for `non-applicable'
+    otherwise.
+  }\label{tab:res:sls}
 \end{table}
 
 %We observe that \todo{\filler}, because \todo{\filler}.

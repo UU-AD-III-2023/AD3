@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <ctime>
+#include <algorithm>
 
 #include "LocalSearch.h"
 
@@ -13,7 +14,7 @@ using std::clock_t;
 
 class InvDes {
 
-    private: 
+    private:
         vector<vector<int>> instances = {{10, 30, 9}, {12, 44, 11}, {15, 21, 7},
             {16, 16, 6}, {9, 36, 12}, {11, 22, 10}, {19, 19, 9}, {10, 37, 14}, {8, 28, 14}, {10, 100, 30},
             {6, 50, 25}, {6, 60, 30}, {11, 150, 50}, {9, 70, 35}, {10, 350, 100}, {13, 250, 80},
@@ -23,8 +24,8 @@ class InvDes {
         InvDes(){};
         void main(int argc, char * argv[]) {
             // Paramters for tuning local search algorithm, does not have to be int.
-            int alpha = 5;
-            int beta = 80;
+            int alpha = 10;
+            int beta = 20;
             bool printMode = false;
 
             int v=0;
@@ -53,7 +54,7 @@ class InvDes {
                 }
                 clock_t start = clock();
                 runSolver(v, b, r, alpha, beta, printMode);
-                std::cout << "\x1b[33m" << "TOTAL TIME TAKEN: " << ((clock() - start)*1.0/CLOCKS_PER_SEC) << "seconds\n\x1b[0m";
+                std::cout << "\x1b[33m" << "TOTAL TIME TAKEN: " << (double)((clock() - start)/CLOCKS_PER_SEC) << " seconds\n\x1b[0m";
 
             } else {
                 // This is just an example of how to run all instances, you probably want to do
@@ -74,7 +75,7 @@ class InvDes {
         void runSolver(int v, int b, int r, int alpha, int beta, bool printMode) {
             // Todo: Add asserts
             stringstream output;
-            output << "\nSolving instance v: " << v << " b: " << b <<  " r: " << r << 
+            output << "\nSolving instance v: " << v << " b: " << b <<  " r: " << r <<
             ". With parameters alpha: " << alpha << " beta: " << beta << "";
             string out = output.str();
             std::cout << out;
@@ -90,19 +91,20 @@ class InvDes {
             medianss << "Median Result: " << findMedian(storage, 5);
             std::cout << "\n\x1b[33m" << medianss.str() <<"\x1b[0m\n\nNEXT!\n";
         }
-        double findMedian(vector<int> a, int n){
+
+        int findMedian(vector<int> a, int n){
             // First we sort the array
-            double varr[100];
+            int varr[5];
             std::copy(a.begin(), a.end(), varr);
             std::sort(varr, varr + n);
-        
+
             // Check for even case
             if (n % 2 != 0)
-                return (double)a[n / 2];
-        
-            return (double)(a[(n - 1) / 2] + a[n / 2]) / 2.0;
+                return (int)varr[n / 2];
+
+            return (int)(varr[(n - 1) / 2] + varr[n / 2]) / 2;
         }
-        
+
 
         // // Function for calculating
         // // the median from geeks for geeks
@@ -112,29 +114,29 @@ class InvDes {
         //         // Applying nth_element
         //         // on n/2th index
         //         nth_element(a.begin(), a.begin() + n / 2, a.end());
-        
+
         //         // Applying nth_element
         //         // on (n-1)/2 th index
         //         nth_element(a.begin(), a.begin() + (n - 1) / 2, a.end());
-        
+
         //         // Find the average of value at
         //         // index N/2 and (N-1)/2
         //         return (double)(a[(n - 1) / 2] + a[n / 2]) / 2.0;
         //     }
-        
+
         //     // If size of the arr[] is odd
         //     else {
-        
+
         //         // Applying nth_element
         //         // on n/2
         //         nth_element(a.begin(), a.begin() + n / 2, a.end());
-        
+
         //         // Value at index (N/2)th
         //         // is the median
         //         return (double)a[n / 2];
         //     }
         // }
-        
+
 };
 
 
