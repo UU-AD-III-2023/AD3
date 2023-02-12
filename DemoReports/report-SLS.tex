@@ -68,7 +68,7 @@ The current state of the local search is given by a $v \times b$ matrix, where e
 %\todo{Describe for each constraint how its
 %  satisfaction is either algorithmically checkable efficiently or
 %  guaranteed to be preserved by the previous two design choices.}
-\item Neighbourhood. As for each of the $v$ rows, we create one possible move, there is a total of $v$ moves in the neighbourhood. The search space in connected, as each permutation of $r$ from $b$ elements can be found from a finite sequence of permutations and switches. As we can reach every feasible configuration for $1$ row, we can also reach every feasible configuration of the matrix, but there will most likely be moves that increase cost between any given configuration and an optimal solution. The size of the neighbourhood is $v\cdot r \cdot (b-r)$. 
+\item Neighbourhood. We create a move for permutation of a zero and a one within one row. The indexes to these ones and zeros are saved in 2 separate vectors to allow for easy retrieval and swaps. Hence, all possible permutations are easily retrievable or iterated through as they are all compiled in a list after initialisation. It allows us to make random moves by shuffling the possible moves in the vector to result in a different first improving neighbours that we select. As we can reach every feasible configuration for $1$ row, we can also reach every feasible configuration of the matrix, but there will most likely be moves that increase cost between any given configuration and an optimal solution. The size of the neighbourhood is $v\cdot r \cdot (b-r)$. 
 %\todo{Describe a neighbourhood based on the
 %  described moves.
 %  % 
