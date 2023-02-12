@@ -115,7 +115,8 @@ As the rows are represented in arrays, we can evaluate the cost difference from 
 %\todo{Describe how you use a bound on the objective
 %  value in order to terminate sometimes the search with proven
 %  optimality, as part of the heuristic.}
-\item Meta-Heuristic. If we make a move, we add the previous configuration to the tabu list and keep it there for $\alpha$ moves.  
+\item Meta-Heuristic. All moves made before arriving at the suboptimal local minima, will be commited and added to the tabu list for alpha iterations. This prevents the same moves from being made to escape from the local minima and hopefully enter a different neighbourhood.
+  
 %\todo{Describe a meta-heuristic based on either
 %  tabu search (strongly recommended for the investment design
 %  problem) or simulated annealing.
