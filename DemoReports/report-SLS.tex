@@ -176,6 +176,7 @@ The executable writes to the standard output a line  followed by one line per ro
 %% Note the non-breaking spaces, typeset via ~, between numbers and
 %% their units:
 All experiments were run under the the \textit{gullviva.it.uu.se} server from the IT department, with Ubuntu 22.04 x86\_64 architecture. 
+
 We attempted to have $\alpha$ be the number of iterations a move will be in the taboo list for, and $\beta$ be the number of restarts from the original starting board to allow the search to escape the local minima, however, changing the parameters led to increased run time but with little to no improvement in performance. We suspect certain helper functions to be bugged that is causing our taboo search to not function as intended and hence its ability to arrive at the optimal solutions is low, where they only remain in the local minima regardless of the alpha beta parameters, hence, we chose to reduce these values to reduce run time.
 %
 \newcommand{\TimeoutSLS}{\todo{300.0}}  % timeout, in CPU seconds; MIN 300.0
