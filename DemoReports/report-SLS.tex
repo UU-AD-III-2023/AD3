@@ -101,7 +101,7 @@ As the rows are represented in arrays, we can evaluate the cost difference from 
 %  Give, without proof, the time complexity of probing; ideally, it is
 %  (sub-)linear in the problem parameters.
 %  }
-\item Heuristic. We make sure, that when in a given state, we do not probe the same row twice, so that the same neighbour is not probed twice. The entire neighbourhood does is not explored exhaustively and if found the first move that decreases the cost is selected. Once we have probed each row, we know, that the neighbourhood is exhausted, and can make a random move instead, and add the current state in our tabu list. We decided to do it this way, because if we calculate the cost of each neighbour, it would drastically increase the run time. 
+\item Heuristic. At initialisation, we create a list for each row, listing the possible swaps following the rules stated in Move that we can make for the given row. While probing we iterate of this list. If we find an improving move, following the cost, we commit it, and continue going through the list. Once we arrive at the end of the list we start again from the beginning, unless we do not find any improving move for an entire cycle through the list. Then we follow through with the rules listed in meta-heuristics
 %\todo{Describe a heuristic for exploring (via
 %    probing) the neighbourhood and selecting a neighbouring assignment
 %    to commit to.
