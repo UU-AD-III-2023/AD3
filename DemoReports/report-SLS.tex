@@ -59,7 +59,7 @@ The current state of the local search is given by a $v \times b$ matrix, where e
   
 \item Initial Assignment. It is made by randomly generating $v$ binary arrays where $r$ ones are randomly positioned. %\todo{Describe an algorithm for generating
 %  (fast) a randomised initial assignment.}
-\item Move. Each move we make is a switch in one row, making a permutation of a zero element with a one element. 
+\item Move. Each move we make is a switch in one row, making a permutation of a zero element with a one element.
 %. With a probability of $\alpha$ we instead make a random move, and with a probability $\beta$ we make a random restart. 
 %\todo{Describe one or more moves that go from an
 %  assignment to a neighbouring assignment by changing the values of
@@ -68,7 +68,7 @@ The current state of the local search is given by a $v \times b$ matrix, where e
 %\todo{Describe for each constraint how its
 %  satisfaction is either algorithmically checkable efficiently or
 %  guaranteed to be preserved by the previous two design choices.}
-\item Neighbourhood. As for each of the $v$ rows, we create one possible move, there is a total of $v$ moves in the neighbourhood. The search space in connected, as each permutation of $r$ from $b$ elements can be found from a finite sequence of permutations and switches. As we can reach every feasible configuration for $1$ row, we can also reach every feasible configuration of the matrix. 
+\item Neighbourhood. As for each of the $v$ rows, we create one possible move, there is a total of $v$ moves in the neighbourhood. The search space in connected, as each permutation of $r$ from $b$ elements can be found from a finite sequence of permutations and switches. As we can reach every feasible configuration for $1$ row, we can also reach every feasible configuration of the matrix, but there will most likely be moves that increase cost between any given configuration and an optimal solution. 
 %\todo{Describe a neighbourhood based on the
 %  described moves.
 %  % 
@@ -92,7 +92,7 @@ The current state of the local search is given by a $v \times b$ matrix, where e
 %\todo{
 % Describe how a neighbouring assignment, as
 %  reachable by a move, can be probed efficiently:
-We iterate through the rows, look at the $r$ elements that have a value $1$ and determine, which one is the most expensive one. We look at the $r-v$ elements that have the value $0$ and see, which one is the cheapest one. The maximum change in the \textsf{cost} is $2$. We exhaustively go through all the rows, and determine the improvements in the cost. 
+We iterate through the rows, look at the $r$ elements that have a value $1$ and determine, which one is the most expensive one. We look at the $r-v$ elements that have the value $0$ and see, which one is the cheapest one. The maximum change in the \textsf{cost} is $1$. If we find an swap where we reduce the cost by $1$ we make the move. If the cost difference is $0$ or $-1$, we do not make the move.  
   % 
 %  describe how the cost function can be evaluated efficiently and
 %  incrementally, and describe the data structures used to do so.
@@ -101,7 +101,7 @@ As the rows are represented in arrays, we can evaluate the cost difference from 
 %  Give, without proof, the time complexity of probing; ideally, it is
 %  (sub-)linear in the problem parameters.
 %  }
-\item Heuristic. We make sure, that when in a given state, we do not probe the same row twice, so that the same neighbour is not probed twice. The entire neighbourhood does is explored exhaustively and if found any move that decreases the cost is selected. Once we have probed each row, we know, that the neighbourhood is exhausted, and can make a random move instead, and add the current state in our tabu list. 
+\item Heuristic. We make sure, that when in a given state, we do not probe the same row twice, so that the same neighbour is not probed twice. The entire neighbourhood does is not explored exhaustively and if found the first move that decreases the cost is selected. Once we have probed each row, we know, that the neighbourhood is exhausted, and can make a random move instead, and add the current state in our tabu list. We decided to do it this way, because if we calculate the cost of each neighbour, it would drastically increase the run time. 
 %\todo{Describe a heuristic for exploring (via
 %    probing) the neighbourhood and selecting a neighbouring assignment
 %    to commit to.
@@ -111,11 +111,11 @@ As the rows are represented in arrays, we can evaluate the cost difference from 
 %  % 
 %  Explain how to ensure that the same neighbour is not probed twice
 %  during a given exploration.}
-\item Optimality. As the Equation \ref{eq:lb} gives a lower bound for the maximal cost (except of the input of $\Tuple{10, 8, 3}$, we have found an optimal solution, if we reached the lower bound given by Equation \ref{eq:lb}, and can stop the algorithm. 
+\item Optimality. As the Equation \ref{eq:lb} gives a lower bound for the maximal cost (except of the input of $\Tuple{10, 8, 3}$, we have found an optimal solution, if we reached the lower bound given by Equation \ref{eq:lb}, and can stop the algorithm. If the number of restarts set in the parameter $\beta$ is reached, we also stop and return the best found configuration up until this point. 
 %\todo{Describe how you use a bound on the objective
 %  value in order to terminate sometimes the search with proven
 %  optimality, as part of the heuristic.}
-\item Meta-Heuristic. In our tabu list is any move that increases the costs, as well as any previous move mode receding a random move or preceding a random restart. 
+\item Meta-Heuristic. If we make a move, we add the previous configuration to the tabu list and keep it there for $\alpha$ moves.  
 %\todo{Describe a meta-heuristic based on either
 %  tabu search (strongly recommended for the investment design
 %  problem) or simulated annealing.
@@ -129,7 +129,7 @@ As the rows are represented in arrays, we can evaluate the cost difference from 
 %  % 
 %  In case of simulated annealing: explain how you chose the cooling
 %  function, cooling rate, and initial temperature.}
-\item Random Restarts. We can make random restarts when we the probing does not yield a better result, instead of making a random move. What we do is given by the parameters $\alpha$ and $\beta$. 
+\item Random Restarts. We can make random restarts when we the probing does not yield a better result. The number of restarts is given by the parameter $\beta$. 
 %\todo{Describe how to detect or guess that a
 %  random restart should be made, as part of the meta-heuristic.}
 %\item Optional Tweaks.  \todo{Describe improvements such as aspiration,
@@ -175,10 +175,8 @@ The executable writes to the standard output a line  followed by one line per ro
 \paragraph{Task~c: Experiments.}
 %% Note the non-breaking spaces, typeset via ~, between numbers and
 %% their units:
-We did not run any experiments, as our code is not completed. 
 All experiments were run under the the \textit{gullviva.it.uu.se} server from the IT department, with Ubuntu 22.04 x86\_64 architecture. 
-
-We fine-tuned the local-search parameters as follows. We ran the executable a few times with certain inputs, where each set of parameters $\alpha$ and $\beta$ and took the configuration, where it timed out the least. 
+We attempted to have $\alpha$ be the number of iterations a move will be in the taboo list for, and $\beta$ be the number of restarts from the original starting board to allow the search to escape the local minima, however, changing the parameters led to increased run time but with little to no improvement in performance. We suspect certain helper functions to be bugged that is causing our taboo search to not function as intended and hence its ability to arrive at the optimal solutions is low, where they only remain in the local minima regardless of the alpha beta parameters, hence, we chose to reduce these values to reduce run time.
 %
 \newcommand{\TimeoutSLS}{\todo{300.0}}  % timeout, in CPU seconds; MIN 300.0
 \newcommand{\RunsSLS}{\todo{5}}         % independent runs per instance; MIN 5
