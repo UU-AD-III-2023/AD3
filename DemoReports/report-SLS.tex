@@ -85,7 +85,7 @@ The current state of the local search is given by a $v \times b$ matrix, where e
 \begin{equation*}
  \mathsf{cost} = \max_{i \neq j}\: v_i \cdot v_j 
 \end{equation*}
-
+In practice, the cost is  calculated by improvement. We calculate the difference in cost between the current configuration and the move we are probing. If improving moves have the same value, we choose the one with the initially higher cost as it is a better improvement in total. 
 %\todo{Describe a cost function, whose value is
 %  to be minimised during search.}
 \item Probing.  
