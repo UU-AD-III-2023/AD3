@@ -237,6 +237,25 @@ Using \green{green} text for trustified literals and \gray{gray} for gray for fa
   (x_5 \lor x_6)
 \end{align*}
 
+\begin{center}
+\begin{tikzpicture}
+	\node (-x2) [state] {$\neg x_2$};
+	\node (-x3) [below = 2.5cm of -x2, state] {$\neg x_3$};
+	\node (x4) [below right=of -x2, state] {$x_4$};
+	\node (-x5) [above right = of x4, state] {$\neg x_5$};
+	\node (x6) [right = of -x5, state] {$x_6$};
+	\node (-x6) [below right = of -x5, state] {$\neg x_6$}; 
+	
+	\path [-stealth, thick]
+		(-x2) edge node {} (x4)
+		(-x3) edge node {} (x4)
+		(x4) edge node {} (-x5)
+		(x4) edge node {} (-x6)
+		(-x5) edge node {} (x6)
+		(-x6) edge node {} (x6)
+		(x6) edge node {} (-x6);
+\end{tikzpicture}
+\end{center}
 
 %\todo{Draw a resulting implication graph.
 %  % (cf.\ \emph{Mini-tutorial on conflict-driven clause learning
